@@ -2,6 +2,7 @@ package com.proyecto.tucca;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -10,11 +11,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -23,19 +27,25 @@ public class LinesFragment extends Fragment {
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+    private CardAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    private View view;
+    private ArrayList<CardItem> listItems;
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_lines, container, false);
-        ArrayList<CardItem> listItems = new ArrayList<>();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_lines, container, false);
+        listItems = new ArrayList<>();
         listItems.add(new CardItem("1", "Plaza España - Telegrafía"));
         listItems.add(new CardItem("2", "Plaza España - Bda. Loreto"));
         listItems.add(new CardItem("3", "Plaza España - Puntales"));
         listItems.add(new CardItem("5", "Plaza España - Zona Franca"));
         listItems.add(new CardItem("7", "Ing. La Cierva - Simón Bolívar"));
+
+        recyclerView = view.findViewById(R.id.recyclerViewCards);
+        buildRecyclerView();
+
         return view;
     }
 
@@ -65,6 +75,7 @@ public class LinesFragment extends Fragment {
 
                     return true;
                 }
+
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     Log.i("onQueryTextSubmit", query);
@@ -88,5 +99,19 @@ public class LinesFragment extends Fragment {
         }
         searchView.setOnQueryTextListener(queryTextListener);
         return super.onOptionsItemSelected(item);
+    }
+
+    private void buildRecyclerView(){
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getContext());
+        adapter = new CardAdapter(listItems);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new CardAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StopsFragment()).commit();
+            }
+        });
     }
 }
