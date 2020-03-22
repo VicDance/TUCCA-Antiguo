@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_home"
+            android:title="Principal"
+            android:icon="@drawable/home"/>
+        <item android:id="@+id/nav_lines"
+            android:title="Líneas"
+            android:icon="@drawable/ic_lines"/>
+        <item android:id="@+id/nav_map"
+            android:title="Mapa de líneas"
+            android:icon="@drawable/ic_map_black_24dp"/>
+        <item android:id="@+id/nav_cards"
+            android:title="Mis tarjetas"
+            android:icon="@drawable/ic_card"/>
+        <item android:id="@+id/nav_log"
+            android:title="Acceder/Registrarse"
+            android:icon="@drawable/ic_logging"/>
+        <item android:id="@+id/nav_settings"
+            android:title="Ajustes"
+            android:icon="@drawable/ic_settings"/>
+        <item android:id="@+id/nav_me"
+            android:title="Yo"
+            android:icon="@drawable/ic_me"/>
+    </group>
+</menu>

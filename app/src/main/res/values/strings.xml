@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">TUCCA</string>
+    <string name="navigation_drawer_open">Open Navigation Drawer</string>
+    <string name="navigation_drawer_close">Close Navigation Drawer</string>
+    <string name="search_hint">Introduzca código o nombre de parada</string>
+    <string name="main_search_hint">Para consultar el tiempo de espera de una parada selecciones el icono en forma de lupa</string>
+    <string name="main_location_hint">Si pulsa en el icono de ubicaión a la derecha de la lupa, podrá consultar los diferentes autobuses que
+    pasan por la ubicación seleccionada</string>
+    <string name="location_title">Seleccione una posición para su localización</string>
+    <string name="select_location">Seleccione una dirección</string>
+    <string name="accept">Aceptar</string>
+    <string name="cancel">Cancelar</string>
+</resources>
