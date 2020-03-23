@@ -2,7 +2,6 @@ package com.proyecto.tucca;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,12 +10,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,21 +24,21 @@ public class LinesFragment extends Fragment {
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
     private RecyclerView recyclerView;
-    private CardAdapter adapter;
+    private LinesAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private View view;
-    private ArrayList<CardItem> listItems;
+    private ArrayList<LinesItem> listItems;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_lines, container, false);
         listItems = new ArrayList<>();
-        listItems.add(new CardItem("1", "Plaza España - Telegrafía"));
-        listItems.add(new CardItem("2", "Plaza España - Bda. Loreto"));
-        listItems.add(new CardItem("3", "Plaza España - Puntales"));
-        listItems.add(new CardItem("5", "Plaza España - Zona Franca"));
-        listItems.add(new CardItem("7", "Ing. La Cierva - Simón Bolívar"));
+        listItems.add(new LinesItem("1", "Plaza España - Telegrafía"));
+        listItems.add(new LinesItem("2", "Plaza España - Bda. Loreto"));
+        listItems.add(new LinesItem("3", "Plaza España - Puntales"));
+        listItems.add(new LinesItem("5", "Plaza España - Zona Franca"));
+        listItems.add(new LinesItem("7", "Ing. La Cierva - Simón Bolívar"));
 
         recyclerView = view.findViewById(R.id.recyclerViewCards);
         buildRecyclerView();
@@ -104,10 +101,10 @@ public class LinesFragment extends Fragment {
     private void buildRecyclerView(){
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
-        adapter = new CardAdapter(listItems);
+        adapter = new LinesAdapter(listItems);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new CardAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new LinesAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StopsFragment()).commit();

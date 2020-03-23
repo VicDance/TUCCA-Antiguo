@@ -1,9 +1,9 @@
 package com.proyecto.tucca;
 
-public class CardItem {
+public class LinesItem {
     private String textNumber, textStartFinish;
 
-    public CardItem(String textNumber, String textStartFinish){
+    public LinesItem(String textNumber, String textStartFinish){
         this.textNumber = textNumber;
         this.textStartFinish = textStartFinish;
     }
