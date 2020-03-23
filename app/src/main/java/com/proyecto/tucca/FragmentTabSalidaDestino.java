@@ -22,7 +22,7 @@ public class FragmentTabSalidaDestino extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tab_salida_destino, container, false);
 
-        /*listItems = new ArrayList<>();
+        listItems = new ArrayList<>();
         listItems.add(new StopsItem(("PLAZA ESPAÑA ")));
         listItems.add(new StopsItem(("AVDA. DEL PUERTO")));
         listItems.add(new StopsItem(("PUERTAS DE TIERRA")));
@@ -38,7 +38,7 @@ public class FragmentTabSalidaDestino extends Fragment {
         listItems.add(new StopsItem(("CORTADURA")));
 
         recyclerView = view.findViewById(R.id.recyclerViewStartFinish);
-        buildRecyclerView();*/
+        buildRecyclerView();
         return view;
     }
 

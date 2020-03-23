@@ -1,6 +1,5 @@
 package com.proyecto.tucca;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
@@ -15,15 +14,16 @@ public class PageAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        switch (position){
-            case 0: new FragmentTabSalidaDestino();
-            break;
-            case 1: new FragmentTabDestinoSalida();
-            break;
-            default:
-                return null;
+        Fragment fragment = null;
+        switch (position) {
+            case 0:
+                fragment = new FragmentTabSalidaDestino();
+                break;
+            case 1:
+                fragment = new FragmentTabDestinoSalida();
+                break;
         }
-        return null;
+        return fragment;
     }
 
     @Override
@@ -32,7 +32,13 @@ public class PageAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public int getItemPosition(@NonNull Object object) {
-        return POSITION_NONE;
+    public CharSequence getPageTitle(int position) {
+        switch (position) {
+            case 0:
+                return "A Cortadura";
+            case 1:
+                return "A Plaza España";
+        }
+        return null;
     }
 }

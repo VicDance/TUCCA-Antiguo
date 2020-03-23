@@ -23,23 +23,23 @@ public class FragmentTabDestinoSalida extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_destino_salida, container, false);
-        /*listItems = new ArrayList<>();
-        listItems.add(new StopsItem(("PLAZA ESPAÑA ")));
-        listItems.add(new StopsItem(("AVDA. DEL PUERTO")));
+        listItems = new ArrayList<>();
+        listItems.add(new StopsItem(("CORTADURA")));
+        listItems.add(new StopsItem(("TELEGRAFÍA")));
+        listItems.add(new StopsItem(("ESTADIO")));
+        listItems.add(new StopsItem(("BALNEARIO")));
+        listItems.add(new StopsItem(("RESIDENCIA")));
+        listItems.add(new StopsItem(("SAN JOSÉ")));
+        listItems.add(new StopsItem(("SAN FELIPE")));
+        listItems.add(new StopsItem(("CUARTELES")));
+        listItems.add(new StopsItem(("COMISARIA")));
         listItems.add(new StopsItem(("PUERTAS DE TIERRA")));
         listItems.add(new StopsItem(("AVDA. ANDALUCIA")));
-        listItems.add(new StopsItem(("COMISARIA")));
-        listItems.add(new StopsItem(("CUARTELES")));
-        listItems.add(new StopsItem(("SAN FELIPE")));
-        listItems.add(new StopsItem(("SAN JOSÉ")));
-        listItems.add(new StopsItem(("RESIDENCIA")));
-        listItems.add(new StopsItem(("BALNEARIO")));
-        listItems.add(new StopsItem(("ESTADIO")));
-        listItems.add(new StopsItem(("TELEGRAFÍA")));
-        listItems.add(new StopsItem(("CORTADURA")));
+        listItems.add(new StopsItem(("AVDA. DEL PUERTO")));
+        listItems.add(new StopsItem(("PLAZA ESPAÑA ")));
 
-        recyclerView = view.findViewById(R.id.recyclerViewStartFinish);
-        buildRecyclerView();*/
+        recyclerView = view.findViewById(R.id.recyclerViewFinishStar);
+        buildRecyclerView();
         return view;
     }
 
