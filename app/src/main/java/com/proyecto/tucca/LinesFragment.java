@@ -2,6 +2,7 @@ package com.proyecto.tucca;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -107,7 +108,9 @@ public class LinesFragment extends Fragment {
         adapter.setOnItemClickListener(new LinesAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StopsFragment()).commit();
+                Intent intent = new Intent(getActivity(), StopsActivity.class);
+                startActivity(intent);
+                //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StopsFragment()).commit();
             }
         });
     }

@@ -54,10 +54,9 @@ public class FragmentTabDestinoSalida extends Fragment {
         adapter.setOnItemClickListener(new StopsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                /*MapStopsFragment mapStopsFragment = new MapStopsFragment();
-                FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.fragment_container, mapStopsFragment);*/
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapStopsFragment()).commit();
+                Intent intent = new Intent(getActivity(), StopsActivity.class);
+                startActivity(intent);
+                //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapStopsFragment()).commit();
             }
         });
     }

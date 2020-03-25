@@ -1,5 +1,6 @@
 package com.proyecto.tucca;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -48,5 +49,13 @@ public class FragmentTabSalidaDestino extends Fragment {
         adapter = new StopsAdapter(listItems);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new StopsAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(getActivity(), MapStopsActivity.class);
+                startActivity(intent);
+                //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MapStopsFragment()).commit();
+            }
+        });
     }
 }
