@@ -5,25 +5,37 @@
 
     <group android:checkableBehavior="single">
         <item android:id="@+id/nav_home"
-            android:title="Principal"
+            android:title="@string/main"
             android:icon="@drawable/home"/>
-        <item android:id="@+id/nav_lines"
-            android:title="Líneas"
-            android:icon="@drawable/ic_lines"/>
+        <item android:id="@+id/nav_trip"
+            android:title="@string/trip"
+            android:icon="@drawable/ic_bus"/>
         <item android:id="@+id/nav_map"
-            android:title="Mapa de líneas"
+            android:title="@string/lines"
             android:icon="@drawable/ic_map_black_24dp"/>
         <item android:id="@+id/nav_cards"
-            android:title="Mis tarjetas"
+            android:title="@string/cards"
             android:icon="@drawable/ic_card"/>
+        <item android:id="@+id/nav_sales"
+            android:title="@string/sales"
+            android:icon="@drawable/ic_sales_point"/>
+        <item android:id="@+id/nav_gap"
+            android:title="@string/gap"
+            android:icon="@drawable/ic_gap"/>
+        <item android:id="@+id/nav_fare"
+            android:title="@string/fare"
+            android:icon="@drawable/ic_fare"/>
+        <item android:id="@+id/nav_places"
+            android:title="@string/interest"
+            android:icon="@drawable/ic_interesting_places"/>
         <item android:id="@+id/nav_log"
-            android:title="Acceder/Registrarse"
+            android:title="@string/login"
             android:icon="@drawable/ic_logging"/>
         <item android:id="@+id/nav_settings"
-            android:title="Ajustes"
+            android:title="@string/settings"
             android:icon="@drawable/ic_settings"/>
         <item android:id="@+id/nav_me"
-            android:title="Yo"
+            android:title="@string/me"
             android:icon="@drawable/ic_me"/>
     </group>
 </menu>
