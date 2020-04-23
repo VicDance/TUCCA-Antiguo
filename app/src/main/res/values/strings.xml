@@ -1,5 +1,17 @@
 <resources>
     <string name="app_name">TUCCA</string>
+    <string name="main">Principal</string>
+    <string name="trip">Realizar viaje</string>
+    <string name="map">Mapa de líneas</string>
+    <string name="cards">Mis tarjetas</string>
+    <string name="sales">Puntos de venta</string>
+    <string name="gap">Saltos</string>
+    <string name="fare">Tarifas</string>
+    <string name="interest">Zonas de interés</string>
+    <string name="login">Acceder/Registrarse</string>
+    <string name="settings">Ajustes</string>
+    <string name="me">Yo</string>
+    <string name="about">Acerca de</string>
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
     <string name="search_hint">Introduzca código o nombre de parada</string>
@@ -10,4 +22,5 @@
     <string name="select_location">Seleccione una dirección</string>
     <string name="accept">Aceptar</string>
     <string name="cancel">Cancelar</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCG8b65kHX5KO5JlD_KK2wdwiPPYcmzTaQ</string>
 </resources>
