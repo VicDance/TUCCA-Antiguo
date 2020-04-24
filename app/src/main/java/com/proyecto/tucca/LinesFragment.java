@@ -3,6 +3,7 @@ package com.proyecto.tucca;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,40 +12,224 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LinesFragment extends Fragment {
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
-    private RecyclerView recyclerView;
     private LinesAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private View view;
-    private ArrayList<LinesItem> listItems;
+    private FareSystemAPI fareSystemAPI;
+    private Spinner spinnerOriginCity;
+    private Spinner spinnerDestinyCity;
+    private Spinner spinnerOriginCentre;
+    private Spinner spinnerDestinyCentre;
+    private City[] listaMunicipios;
+    private String[] listaNombreMunicipios;
+    private String[] listaNucleos;
+    private ArrayAdapter<String> adapterOriginCities;
+    private ArrayAdapter<String> adapterOriginCentre;
+    private ArrayAdapter<String> adapterDestinyCities;
+    private ArrayAdapter<String> adapterDestinyCentre;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_lines, container, false);
-        listItems = new ArrayList<>();
-        listItems.add(new LinesItem("1", "Plaza España - Telegrafía"));
-        listItems.add(new LinesItem("2", "Plaza España - Bda. Loreto"));
-        listItems.add(new LinesItem("3", "Plaza España - Puntales"));
-        listItems.add(new LinesItem("5", "Plaza España - Zona Franca"));
-        listItems.add(new LinesItem("7", "Ing. La Cierva - Simón Bolívar"));
-
-        recyclerView = view.findViewById(R.id.recyclerViewCards);
-        buildRecyclerView();
-
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://api.ctan.es/v1/Consorcios/2/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        fareSystemAPI = retrofit.create(FareSystemAPI.class);
+        listarMunicipios();
         return view;
+    }
+
+    private void listarMunicipios(){
+        Call<CityList> cityListCall = fareSystemAPI.getCityList();
+        cityListCall.enqueue(new Callback<CityList>() {
+            @Override
+            public void onResponse(Call<CityList> call, Response<CityList> response) {
+                if(!response.isSuccessful()){
+                    System.out.println("Code: " + response.code());
+                    return;
+                }
+                final CityList cityList = response.body();
+                listaMunicipios = new City[cityList.getCities().size()];
+                listaNombreMunicipios = new String[cityList.getCities().size()];
+                for(int i = 0; i < cityList.getCities().size(); i++){
+                    listaMunicipios[i] = cityList.getCities().get(i);
+                    listaNombreMunicipios[i] = cityList.getCities().get(i).getNombreMunicipio();
+                }
+
+                setSpinnerOriginCity();
+                setSpinnerDestinyCity();
+            }
+
+            @Override
+            public void onFailure(Call<CityList> call, Throwable t) {
+                System.out.println("Error: " + t.getMessage());
+            }
+        });
+    }
+
+    private void setSpinnerOriginCity(){
+        spinnerOriginCity = view.findViewById(R.id.spinner_origin_city);
+        adapterOriginCities = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, listaNombreMunicipios);
+        adapterOriginCities.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerOriginCity.setAdapter(adapterOriginCities);
+        spinnerOriginCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String ciudad = (String) parent.getSelectedItem();
+                for(int i = 0; i < listaMunicipios.length; i++){
+                    if(ciudad.equalsIgnoreCase(listaMunicipios[i].getNombreMunicipio())){
+                        id = listaMunicipios[i].getIdMunicipio();
+                    }
+                }
+                listarNucleosOrigen(id);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void setSpinnerDestinyCity(){
+        spinnerDestinyCity = view.findViewById(R.id.spinner_destiny_city);
+        adapterDestinyCities = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, listaNombreMunicipios);
+        adapterDestinyCities.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerDestinyCity.setAdapter(adapterDestinyCities);
+        spinnerDestinyCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String ciudad = (String) parent.getSelectedItem();
+                for (int i = 0; i < listaMunicipios.length; i++) {
+                    if (ciudad.equalsIgnoreCase(listaMunicipios[i].getNombreMunicipio())) {
+                        id = listaMunicipios[i].getIdMunicipio();
+                    }
+                }
+                listarNucleosDestino(id);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+    }
+
+    private void getSelectedCity(View view){
+        String ciudad = (String) spinnerOriginCity.getSelectedItem();
+        long id = 0;
+        for(int i = 0; i < listaMunicipios.length; i++){
+            if(ciudad.equalsIgnoreCase(listaMunicipios[i].getNombreMunicipio())){
+                id = listaMunicipios[i].getIdMunicipio();
+            }
+        }
+        City city = new City(id, ciudad);
+        displayCityInfo(city);
+    }
+
+    private void displayCityInfo(City city){
+        long id = city.getIdMunicipio();
+        String name = city.getNombreMunicipio();
+
+        String data = "Id: " + id +". Nombre: " + name;
+        Toast.makeText(getContext(), data, Toast.LENGTH_SHORT).show();
+    }
+
+    public void listarNucleosOrigen(final long idMunicipio){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://api.ctan.es/v1/Consorcios/2/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        FareSystemAPI fareSystemAPI = retrofit.create(FareSystemAPI.class);
+        Call<CityList> cityListCall = fareSystemAPI.getCentreList(idMunicipio);
+        cityListCall.enqueue(new Callback<CityList>() {
+            @Override
+            public void onResponse(Call<CityList> call, Response<CityList> response) {
+                if(!response.isSuccessful()){
+                    System.out.println("Code: " + response.code());
+                    return;
+                }
+                CityList cityList = response.body();
+                listaNucleos = new String[cityList.getCentreList().size()];
+                for(int i = 0; i < cityList.getCentreList().size(); i++){
+                    listaNucleos[i] = cityList.getCentreList().get(i).getNombreNucleo();
+                }
+                spinnerOriginCentre = view.findViewById(R.id.spinner_origin_centre);
+                adapterOriginCentre = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaNucleos);
+                adapterOriginCentre.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerOriginCentre.setAdapter(adapterOriginCentre);
+            }
+
+            @Override
+            public void onFailure(Call<CityList> call, Throwable t) {
+                System.out.println("Error: " + t.getMessage());
+            }
+        });
+    }
+
+    public void listarNucleosDestino(final long idMunicipio){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://api.ctan.es/v1/Consorcios/2/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        FareSystemAPI fareSystemAPI = retrofit.create(FareSystemAPI.class);
+        Call<CityList> cityListCall = fareSystemAPI.getCentreList(idMunicipio);
+        cityListCall.enqueue(new Callback<CityList>() {
+            @Override
+            public void onResponse(Call<CityList> call, Response<CityList> response) {
+                if(!response.isSuccessful()){
+                    System.out.println("Code: " + response.code());
+                    return;
+                }
+                CityList cityList = response.body();
+                listaNucleos = new String[cityList.getCentreList().size()];
+                for(int i = 0; i < cityList.getCentreList().size(); i++){
+                    listaNucleos[i] = cityList.getCentreList().get(i).getNombreNucleo();
+                }
+                spinnerDestinyCentre = view.findViewById(R.id.spinner_destiny_centre);
+                adapterDestinyCentre = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaNucleos);
+                adapterDestinyCentre.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinnerDestinyCentre.setAdapter(adapterDestinyCentre);
+            }
+
+            @Override
+            public void onFailure(Call<CityList> call, Throwable t) {
+                System.out.println("Error: " + t.getMessage());
+            }
+        });
     }
 
     @Override
@@ -97,21 +282,5 @@ public class LinesFragment extends Fragment {
         }
         searchView.setOnQueryTextListener(queryTextListener);
         return super.onOptionsItemSelected(item);
-    }
-
-    private void buildRecyclerView(){
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getContext());
-        adapter = new LinesAdapter(listItems);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new LinesAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                Intent intent = new Intent(getActivity(), StopsActivity.class);
-                startActivity(intent);
-                //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StopsFragment()).commit();
-            }
-        });
     }
 }
