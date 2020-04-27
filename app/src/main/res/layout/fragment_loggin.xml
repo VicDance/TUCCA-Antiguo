@@ -3,10 +3,63 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Logging fragment"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"/>
+        android:src="@drawable/ic_person_loggin"
+        android:layout_centerHorizontal="true"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="35sp"
+            android:text="@string/user"
+            android:textSize="30sp"
+            android:textAlignment="center"
+            android:textIsSelectable="false"/>
+        <EditText
+            android:id="@+id/edit_text_user"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="35sp"
+            android:layout_marginTop="20dp"
+            android:text="@string/password"
+            android:textSize="30sp"
+            android:textAlignment="center"
+            android:textIsSelectable="false"/>
+        <EditText
+            android:id="@+id/edit_text_password"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button_login"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="400dp"
+        android:background="@drawable/rounded_button"
+        android:text="@string/log_in"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"/>
+    <Button
+        android:id="@+id/button_register"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="470dp"
+        android:background="@drawable/rounded_border"
+        android:text="@string/sign_up"
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="20sp"/>
 </RelativeLayout>
