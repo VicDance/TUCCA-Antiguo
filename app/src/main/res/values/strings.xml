@@ -33,4 +33,8 @@
     <string name="email">Correo electrónico</string>
     <string name="phone">Teléfono</string>
     <string name="terms">Acepto los términos y las condiciones de uso</string>
+    <string name="line">Línea</string>
+    <string name="stops">Paradas</string>
+    <string name="frequency">Frecuencia</string>
+    <string name="btn_search_trip">Buscar</string>
 </resources>

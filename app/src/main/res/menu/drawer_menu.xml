@@ -10,9 +10,6 @@
         <item android:id="@+id/nav_trip"
             android:title="@string/trip"
             android:icon="@drawable/ic_bus"/>
-        <item android:id="@+id/nav_map"
-            android:title="@string/lines"
-            android:icon="@drawable/ic_map_black_24dp"/>
         <item android:id="@+id/nav_cards"
             android:title="@string/cards"
             android:icon="@drawable/ic_card"/>

@@ -10,6 +10,14 @@ public class Centre {
     @SerializedName("nombre")
     private String nombreNucleo;
 
+    public Centre(){
+
+    }
+
+    public Centre(String nombreNucleo){
+        this.nombreNucleo = nombreNucleo;
+    }
+
     public int getIdNucleo() {
         return idNucleo;
     }

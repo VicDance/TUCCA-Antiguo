@@ -13,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,9 +33,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class LinesFragment extends Fragment {
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
-    private LinesAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private View view;
+    private Retrofit retrofit;
     private FareSystemAPI fareSystemAPI;
     private Spinner spinnerOriginCity;
     private Spinner spinnerDestinyCity;
@@ -41,23 +43,45 @@ public class LinesFragment extends Fragment {
     private Spinner spinnerDestinyCentre;
     private City[] listaMunicipios;
     private String[] listaNombreMunicipios;
-    private String[] listaNucleos;
+    private Centre[] listaNucleos;
+    private String[] listaNombreNucleos;
+    private String[] listaLineas;
     private ArrayAdapter<String> adapterOriginCities;
     private ArrayAdapter<String> adapterOriginCentre;
     private ArrayAdapter<String> adapterDestinyCities;
     private ArrayAdapter<String> adapterDestinyCentre;
+    private String[] tableHeaders = {String.valueOf(R.string.line), String.valueOf(R.string.stops), String.valueOf(R.string.frequency)};
+    private String[] tableRows;
+    private Button btnSearch;
+    private TextView textViewLines;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_lines, container, false);
-        Retrofit retrofit = new Retrofit.Builder()
+        retrofit = new Retrofit.Builder()
                 .baseUrl("http://api.ctan.es/v1/Consorcios/2/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         fareSystemAPI = retrofit.create(FareSystemAPI.class);
         listarMunicipios();
+        textViewLines = view.findViewById(R.id.text_view_lines);
+        btnSearch = view.findViewById(R.id.btn_search_trip);
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String nucleoOrigen = (String) spinnerOriginCentre.getSelectedItem();
+                String nucleoDestino = (String) spinnerDestinyCentre.getSelectedItem();
+                /*for(int i = 0; i < listaNucleos.length; i++){
+                    if(nucleoOrigen == listaNucleos[i].getNombreNucleo()){
+                        int id = listaNucleos[i].getIdNucleo();
+                        System.out.println("Id: " + id);
+                        listarLineasPorNucleo(id);
+                    }
+                }*/
+            }
+        });
         return view;
     }
 
@@ -160,7 +184,7 @@ public class LinesFragment extends Fragment {
     }
 
     public void listarNucleosOrigen(final long idMunicipio){
-        Retrofit retrofit = new Retrofit.Builder()
+        retrofit = new Retrofit.Builder()
                 .baseUrl("http://api.ctan.es/v1/Consorcios/2/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -174,12 +198,14 @@ public class LinesFragment extends Fragment {
                     return;
                 }
                 CityList cityList = response.body();
-                listaNucleos = new String[cityList.getCentreList().size()];
+                listaNucleos = new Centre[cityList.getCentreList().size()];
+                listaNombreNucleos = new String[cityList.getCentreList().size()];
                 for(int i = 0; i < cityList.getCentreList().size(); i++){
-                    listaNucleos[i] = cityList.getCentreList().get(i).getNombreNucleo();
+                    listaNucleos[i] = cityList.getCentreList().get(i);
+                    listaNombreNucleos[i] = cityList.getCentreList().get(i).getNombreNucleo();
                 }
                 spinnerOriginCentre = view.findViewById(R.id.spinner_origin_centre);
-                adapterOriginCentre = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaNucleos);
+                adapterOriginCentre = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaNombreNucleos);
                 adapterOriginCentre.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerOriginCentre.setAdapter(adapterOriginCentre);
             }
@@ -192,7 +218,7 @@ public class LinesFragment extends Fragment {
     }
 
     public void listarNucleosDestino(final long idMunicipio){
-        Retrofit retrofit = new Retrofit.Builder()
+        retrofit = new Retrofit.Builder()
                 .baseUrl("http://api.ctan.es/v1/Consorcios/2/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -206,18 +232,54 @@ public class LinesFragment extends Fragment {
                     return;
                 }
                 CityList cityList = response.body();
-                listaNucleos = new String[cityList.getCentreList().size()];
+                listaNucleos = new Centre[cityList.getCentreList().size()];
+                listaNombreNucleos = new String[cityList.getCentreList().size()];
                 for(int i = 0; i < cityList.getCentreList().size(); i++){
-                    listaNucleos[i] = cityList.getCentreList().get(i).getNombreNucleo();
+                    listaNombreNucleos[i] = cityList.getCentreList().get(i).getNombreNucleo();
+                    listaNucleos[i] = cityList.getCentreList().get(i);
                 }
                 spinnerDestinyCentre = view.findViewById(R.id.spinner_destiny_centre);
-                adapterDestinyCentre = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaNucleos);
+                adapterDestinyCentre = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaNombreNucleos);
                 adapterDestinyCentre.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerDestinyCentre.setAdapter(adapterDestinyCentre);
             }
 
             @Override
             public void onFailure(Call<CityList> call, Throwable t) {
+                System.out.println("Error: " + t.getMessage());
+            }
+        });
+    }
+
+    public void listarPlanificador(long idLinea){
+        retrofit = new Retrofit.Builder()
+                .baseUrl("http://api.ctan.es/v1/Consorcios/2/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        FareSystemAPI fareSystemAPI = retrofit.create(FareSystemAPI.class);
+        Call<LineList> lineListCall = fareSystemAPI.getLineList(idLinea);
+        lineListCall.enqueue(new Callback<LineList>() {
+            @Override
+            public void onResponse(Call<LineList> call, Response<LineList> response) {
+                if(!response.isSuccessful()){
+                    System.out.println("Code: " + response.code());
+                    return;
+                }
+                LineList lineList = response.body();
+                listaLineas = new String[lineList.getLines().size()];
+                String cadena = "";
+                for(int i = 0; i < lineList.getLines().size(); i++){
+                    listaLineas[i] = lineList.getLines().get(i).getNombre();
+                }
+                /*for(int i = 0; i < listaLineas.length; i++){
+                    cadena += listaLineas[i] + "\n";
+                    //System.out.println(listaLineas[i]);
+                }
+                textViewLines.append(cadena);*/
+            }
+
+            @Override
+            public void onFailure(Call<LineList> call, Throwable t) {
                 System.out.println("Error: " + t.getMessage());
             }
         });

@@ -13,4 +13,10 @@ public interface FareSystemAPI {
 
     @GET("municipios/{id}/nucleos")
     Call<CityList> getCentreList(@Path("id") long idNucleo);
+
+    /*@GET("nucleos/{id}/lineas")
+    Call<LineList> getLineList(@Path("id") long idLinea);*/
+
+    @GET("horarios_lineas?dia=&frecuencia=&lang=ES&linea={id}&mes=")
+    Call<LineList> getLineList(@Path("id") long idLinea);
 }

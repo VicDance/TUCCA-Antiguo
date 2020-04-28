@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class LinesAdapter extends RecyclerView.Adapter<LinesAdapter.LinesViewHolder> {
-    private ArrayList<LinesItem> itemList;
+public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardsViewHolder> {
+    private ArrayList<CardItem> itemList;
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener{
@@ -22,19 +22,18 @@ public class LinesAdapter extends RecyclerView.Adapter<LinesAdapter.LinesViewHol
         mListener = listener;
     }
 
-    public static class LinesViewHolder extends RecyclerView.ViewHolder{
+    public static class CardsViewHolder extends RecyclerView.ViewHolder{
         public TextView textNumber;
-        public TextView textStartFinish;
 
-        public LinesViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
+        public CardsViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
-            textNumber = itemView.findViewById(R.id.textViewNumber);
-            textStartFinish = itemView.findViewById(R.id.textViewStartFinish);
+            textNumber = itemView.findViewById(R.id.text_view_number_card);
             itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     if(listener != null){
                         int position = getAdapterPosition();
+                        //System.out.println("Posicion " + position);
                         if(position != RecyclerView.NO_POSITION){
                             listener.onItemClick(position);
                         }
@@ -44,23 +43,22 @@ public class LinesAdapter extends RecyclerView.Adapter<LinesAdapter.LinesViewHol
         }
     }
 
-    public LinesAdapter(ArrayList<LinesItem> itemList){
+    public CardsAdapter(ArrayList<CardItem> itemList){
         this.itemList = itemList;
     }
 
     @NonNull
     @Override
-    public LinesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CardsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_item, parent, false);
-        LinesViewHolder viewHolder = new LinesViewHolder(view, mListener);
+        CardsViewHolder viewHolder = new CardsViewHolder(view, mListener);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull LinesViewHolder holder, int position) {
-        LinesItem currentItem = itemList.get(position);
+    public void onBindViewHolder(@NonNull CardsViewHolder holder, int position) {
+        CardItem currentItem = itemList.get(position);
         holder.textNumber.setText(currentItem.getTextNumber());
-        holder.textStartFinish.setText(currentItem.getTextStartFinish());
     }
 
     @Override
