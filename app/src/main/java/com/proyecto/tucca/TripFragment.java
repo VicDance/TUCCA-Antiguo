@@ -30,7 +30,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class LinesFragment extends Fragment {
+public class TripFragment extends Fragment {
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
     private RecyclerView.LayoutManager layoutManager;
@@ -59,7 +59,7 @@ public class LinesFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_lines, container, false);
+        view = inflater.inflate(R.layout.fragment_trip, container, false);
         retrofit = new Retrofit.Builder()
                 .baseUrl("http://api.ctan.es/v1/Consorcios/2/")
                 .addConverterFactory(GsonConverterFactory.create())

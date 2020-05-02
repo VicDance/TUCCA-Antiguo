@@ -37,4 +37,7 @@
     <string name="stops">Paradas</string>
     <string name="frequency">Frecuencia</string>
     <string name="btn_search_trip">Buscar</string>
+    <string name="everyday_card">Tarjeta estándar</string>
+    <string name="retired_card">Tarjeta jubilados</string>
+    <string name="student_card">Tarjeta estudiante</string>
 </resources>

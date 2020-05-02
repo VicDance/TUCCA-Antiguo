@@ -25,34 +25,34 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import static com.proyecto.tucca.LoginFragment.login;
+
 public class CardsFragment extends Fragment {
     private View view;
     private RecyclerView recyclerView;
     private CardsAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
     private TextView textView;
+    private ArrayList<CardItem> cardItemList = null;
+
+    public CardsFragment() {
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_cards, container, false);
 
-        final ArrayList<CardItem> cardItemList = new ArrayList<CardItem>();
+        cardItemList = new ArrayList<CardItem>();
         cardItemList.add(new CardItem("1234"));
         cardItemList.add(new CardItem("5678"));
         recyclerView = view.findViewById(R.id.recycler_view_cards);
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new CardsAdapter(cardItemList);
-        recyclerView.setAdapter(adapter);
-
-        adapter.setOnItemClickListener(new CardsAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                Toast.makeText(getContext(), "Pulsado item " + position, Toast.LENGTH_SHORT).show();
-            }
-        });
+        if(login){
+            buildRecycler();
+        }else{
+            textView = view.findViewById(R.id.text_view_no_login);
+            textView.setText("Debes estar conectado para guardar tarjetas");
+        }
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
             @Override
@@ -84,6 +84,21 @@ public class CardsFragment extends Fragment {
         }).attachToRecyclerView(recyclerView);
 
         return view;
+    }
+
+    private void buildRecycler(){
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new CardsAdapter(cardItemList);
+        recyclerView.setAdapter(adapter);
+
+        adapter.setOnItemClickListener(new CardsAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Toast.makeText(getContext(), "Pulsado item " + position, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
