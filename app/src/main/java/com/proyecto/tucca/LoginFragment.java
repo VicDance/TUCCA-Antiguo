@@ -31,8 +31,8 @@ public class LoginFragment extends Fragment {
     private EditText editTextUser;
     private EditText editTextPassword;
     public static boolean login;
-    private DataOutputStream dataOut;
-    private DataInputStream dataIn;
+    public static DataOutputStream dataOut;
+    public static DataInputStream dataIn;
 
 
     @Nullable
@@ -66,6 +66,8 @@ public class LoginFragment extends Fragment {
                         String respuesta = dataIn.readUTF();
                         if(respuesta.equalsIgnoreCase("correcto")){
                             login = true;
+                            Intent intent = new Intent(getContext(), MeActivity.class);
+                            startActivity(intent);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -79,11 +81,5 @@ public class LoginFragment extends Fragment {
             }
         });
         return view;
-    }
-
-
-
-    private void comprobarCredenciales(){
-
     }
 }

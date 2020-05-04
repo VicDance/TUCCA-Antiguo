@@ -40,4 +40,6 @@
     <string name="everyday_card">Tarjeta estándar</string>
     <string name="retired_card">Tarjeta jubilados</string>
     <string name="student_card">Tarjeta estudiante</string>
+    <string name="change_password">Cambiar contraseña</string>
+    <string name="born_date">Fecha nacimiento</string>
 </resources>
