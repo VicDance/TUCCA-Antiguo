@@ -1,4 +1,4 @@
-package com.proyecto.tucca;
+package com.proyecto.tucca.model;
 
 import com.google.gson.annotations.SerializedName;
 

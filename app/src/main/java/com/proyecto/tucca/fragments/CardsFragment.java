@@ -1,11 +1,8 @@
-package com.proyecto.tucca;
+package com.proyecto.tucca.fragments;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,9 +20,14 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.proyecto.tucca.CardItem;
+import com.proyecto.tucca.adapters.CardsAdapter;
+import com.proyecto.tucca.R;
+import com.proyecto.tucca.activities.AddCardActivity;
+
 import java.util.ArrayList;
 
-import static com.proyecto.tucca.LoginFragment.login;
+import static com.proyecto.tucca.fragments.LoginFragment.login;
 
 public class CardsFragment extends Fragment {
     private View view;

@@ -1,4 +1,4 @@
-package com.proyecto.tucca;
+package com.proyecto.tucca.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -8,16 +8,16 @@ import retrofit2.http.GET;
 
 public class City {
     @SerializedName("idMunicipio")
-    private long idMunicipio;
+    private int idMunicipio;
     @SerializedName("datos")
     private String nombreMunicipio;
 
-    public City(long idMunicipio, String nombreMunicipio){
+    public City(int idMunicipio, String nombreMunicipio){
         this.idMunicipio = idMunicipio;
         this.nombreMunicipio = nombreMunicipio;
     }
 
-    public long getIdMunicipio() {
+    public int getIdMunicipio() {
         return idMunicipio;
     }
 

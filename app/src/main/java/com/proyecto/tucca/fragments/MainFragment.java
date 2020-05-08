@@ -1,4 +1,4 @@
-package com.proyecto.tucca;
+package com.proyecto.tucca.fragments;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -16,6 +16,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+
+import com.proyecto.tucca.FareSystemAPI;
+import com.proyecto.tucca.model.FareSystemList;
+import com.proyecto.tucca.LocationDialog;
+import com.proyecto.tucca.R;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -1,4 +1,4 @@
-package com.proyecto.tucca;
+package com.proyecto.tucca.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +9,13 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.proyecto.tucca.R;
+import com.proyecto.tucca.adapters.StopsAdapter;
+import com.proyecto.tucca.StopsItem;
+import com.proyecto.tucca.activities.StopsActivity;
 
 import java.util.ArrayList;
 

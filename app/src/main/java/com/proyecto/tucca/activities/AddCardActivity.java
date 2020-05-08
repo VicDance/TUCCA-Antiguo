@@ -1,4 +1,4 @@
-package com.proyecto.tucca;
+package com.proyecto.tucca.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,10 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.proyecto.tucca.R;
 
 public class AddCardActivity extends AppCompatActivity {
     private TextView textViewDailyCard;

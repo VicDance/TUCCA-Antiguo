@@ -1,4 +1,4 @@
-package com.proyecto.tucca;
+package com.proyecto.tucca.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.proyecto.tucca.R;
+import com.proyecto.tucca.StopsItem;
 
 import java.util.ArrayList;
 

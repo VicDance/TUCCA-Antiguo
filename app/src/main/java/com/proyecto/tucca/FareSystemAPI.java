@@ -1,5 +1,9 @@
 package com.proyecto.tucca;
 
+import com.proyecto.tucca.model.CityList;
+import com.proyecto.tucca.model.FareSystemList;
+import com.proyecto.tucca.model.LineList;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

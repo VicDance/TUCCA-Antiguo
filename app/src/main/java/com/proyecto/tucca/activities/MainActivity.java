@@ -1,4 +1,4 @@
-package com.proyecto.tucca;
+package com.proyecto.tucca.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -7,22 +7,36 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.MenuItem;
 
 import com.google.android.material.navigation.NavigationView;
+import com.proyecto.tucca.fragments.CardsFragment;
+import com.proyecto.tucca.fragments.LoginFragment;
+import com.proyecto.tucca.fragments.MainFragment;
+import com.proyecto.tucca.R;
+import com.proyecto.tucca.fragments.SalePointFragment;
+import com.proyecto.tucca.fragments.SettingsFragment;
+import com.proyecto.tucca.fragments.TripFragment;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import static com.proyecto.tucca.fragments.LoginFragment.login;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout drawerLayout;
     public static Socket cliente;
+    public static DataOutputStream dataOut;
+    public static DataInputStream dataIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +80,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SalePointFragment()).commit();
                 break;
             case R.id.nav_log:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginFragment()).commit();
+                if(login = true){
+                    Intent intent = new Intent(this, MeActivity.class);
+                    startActivity(intent);
+                }else {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginFragment()).commit();
+                }
                 break;
             case R.id.nav_settings:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
@@ -96,6 +115,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             StrictMode.setThreadPolicy(policy);
             try {
                 cliente = new Socket(HOST, PUERTO);
+                dataOut = new DataOutputStream(cliente.getOutputStream());
+                dataIn = new DataInputStream(cliente.getInputStream());
             } catch (IOException ex) {
                 Logger.getLogger(LoginFragment.class.getName()).log(Level.SEVERE, null, ex);
             }

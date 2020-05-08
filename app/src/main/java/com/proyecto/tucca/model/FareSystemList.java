@@ -1,10 +1,9 @@
-package com.proyecto.tucca;
+package com.proyecto.tucca.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.proyecto.tucca.model.FareSystem;
 
 import java.util.List;
-
-import retrofit2.http.GET;
 
 public class FareSystemList {
     @SerializedName("zonas")

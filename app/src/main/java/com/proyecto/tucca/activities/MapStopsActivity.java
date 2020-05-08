@@ -1,13 +1,8 @@
-package com.proyecto.tucca;
+package com.proyecto.tucca.activities;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +13,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.proyecto.tucca.R;
+import com.proyecto.tucca.adapters.TimeStopAdapter;
+import com.proyecto.tucca.TimeStopsItem;
 
 import java.util.ArrayList;
 

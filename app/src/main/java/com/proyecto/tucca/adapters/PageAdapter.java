@@ -1,8 +1,11 @@
-package com.proyecto.tucca;
+package com.proyecto.tucca.adapters;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+
+import com.proyecto.tucca.fragments.FragmentTabDestinoSalida;
+import com.proyecto.tucca.fragments.FragmentTabSalidaDestino;
 
 public class PageAdapter extends FragmentPagerAdapter {
     private int numTabs;

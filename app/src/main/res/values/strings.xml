@@ -36,10 +36,12 @@
     <string name="line">Línea</string>
     <string name="stops">Paradas</string>
     <string name="frequency">Frecuencia</string>
-    <string name="btn_search_trip">Buscar</string>
+    <string name="btn_search_trip">Buscar viaje</string>
+    <string name="btn_pay_trip">Pagar viaje</string>
     <string name="everyday_card">Tarjeta estándar</string>
     <string name="retired_card">Tarjeta jubilados</string>
     <string name="student_card">Tarjeta estudiante</string>
     <string name="change_password">Cambiar contraseña</string>
+    <string name="exit">Cambiar contraseña</string>
     <string name="born_date">Fecha nacimiento</string>
 </resources>

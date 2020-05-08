@@ -1,4 +1,4 @@
-package com.proyecto.tucca;
+package com.proyecto.tucca.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -7,11 +7,19 @@ public class Centre {
     private int idNucleo;
     @SerializedName("idMunicipio")
     private int idMunicipio;
+    private char idZona;
     @SerializedName("nombre")
     private String nombreNucleo;
 
     public Centre(){
 
+    }
+
+    public Centre(int idNucleo, int idMunicipio, char idZona, String nombreNucleo){
+        this.idNucleo = idNucleo;
+        this.idMunicipio = idMunicipio;
+        this.idZona = idZona;
+        this.nombreNucleo = nombreNucleo;
     }
 
     public Centre(String nombreNucleo){

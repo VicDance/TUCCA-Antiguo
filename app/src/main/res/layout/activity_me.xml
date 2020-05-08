@@ -67,27 +67,28 @@
             android:text=""
             android:textSize="30sp" />
 
-        <RelativeLayout
+        <!--<RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent">-->
 
             <Button
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:background="@drawable/rounded_button"
                 android:text="@string/change_password"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:layout_marginBottom="50dp"
+                android:layout_marginTop="30dp"/>
 
             <Button
+                android:id="@+id/btn_exit"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginLeft="30dp"
                 android:background="@drawable/rounded_border"
-                android:text="cerrar sesión"
-                android:textColor="@android:color/holo_blue_light" />
-        </RelativeLayout>
+                android:text="@string/exit"
+                android:textColor="@android:color/holo_blue_light"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="30dp"/>
+        <!--</RelativeLayout>-->
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

@@ -1,9 +1,7 @@
-package com.proyecto.tucca;
+package com.proyecto.tucca.fragments;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +13,17 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import com.proyecto.tucca.R;
+import com.proyecto.tucca.activities.MeActivity;
+import com.proyecto.tucca.activities.RegisterActivity;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import static com.proyecto.tucca.MainActivity.cliente;
+import static com.proyecto.tucca.activities.MainActivity.cliente;
+import static com.proyecto.tucca.activities.MainActivity.dataIn;
+import static com.proyecto.tucca.activities.MainActivity.dataOut;
 
 public class LoginFragment extends Fragment {
     private View view;
@@ -31,8 +32,6 @@ public class LoginFragment extends Fragment {
     private EditText editTextUser;
     private EditText editTextPassword;
     public static boolean login;
-    public static DataOutputStream dataOut;
-    public static DataInputStream dataIn;
 
 
     @Nullable
@@ -55,8 +54,6 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 if (editTextUser.getText().length() != 0 && editTextPassword.getText().length() != 0) {
                     try {
-                        dataOut = new DataOutputStream(cliente.getOutputStream());
-                        dataIn = new DataInputStream(cliente.getInputStream());
                         dataOut.writeUTF("inicio");
                         dataOut.flush();
                         dataOut.writeUTF(editTextUser.getText().toString());
@@ -68,6 +65,11 @@ public class LoginFragment extends Fragment {
                             login = true;
                             Intent intent = new Intent(getContext(), MeActivity.class);
                             startActivity(intent);
+                        }else{
+                            new AlertDialog.Builder(getContext())
+                                    .setTitle("No se pudo conectar")
+                                    .setMessage("Usuario o contraseña incorrectos")
+                                    .show();
                         }
                     } catch (IOException e) {
                         e.printStackTrace();

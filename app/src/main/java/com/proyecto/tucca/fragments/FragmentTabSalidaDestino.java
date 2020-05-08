@@ -1,4 +1,4 @@
-package com.proyecto.tucca;
+package com.proyecto.tucca.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.proyecto.tucca.activities.MapStopsActivity;
+import com.proyecto.tucca.R;
+import com.proyecto.tucca.adapters.StopsAdapter;
+import com.proyecto.tucca.StopsItem;
 
 import java.util.ArrayList;
 
