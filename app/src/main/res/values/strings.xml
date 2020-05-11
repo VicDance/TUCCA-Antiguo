@@ -42,6 +42,7 @@
     <string name="retired_card">Tarjeta jubilados</string>
     <string name="student_card">Tarjeta estudiante</string>
     <string name="change_password">Cambiar contraseña</string>
-    <string name="exit">Cambiar contraseña</string>
+    <string name="exit">Cerrar sesión</string>
     <string name="born_date">Fecha nacimiento</string>
+    <string name="new_credit_card">Nueva tarjeta</string>
 </resources>

@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".activities.MeActivity"></activity>
+        <activity android:name=".activities.NewCreditCardActivity"></activity>
+        <activity android:name=".activities.CreditCardActivity" />
+        <activity android:name=".activities.MeActivity" />
         <activity
             android:name=".activities.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

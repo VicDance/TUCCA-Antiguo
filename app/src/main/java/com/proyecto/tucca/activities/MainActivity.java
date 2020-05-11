@@ -6,17 +6,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.proyecto.tucca.fragments.CardsFragment;
 import com.proyecto.tucca.fragments.LoginFragment;
 import com.proyecto.tucca.fragments.MainFragment;
 import com.proyecto.tucca.R;
+import com.proyecto.tucca.fragments.MeFragment;
 import com.proyecto.tucca.fragments.SalePointFragment;
 import com.proyecto.tucca.fragments.SettingsFragment;
 import com.proyecto.tucca.fragments.TripFragment;
@@ -34,9 +42,9 @@ import static com.proyecto.tucca.fragments.LoginFragment.login;
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout drawerLayout;
-    public static Socket cliente;
+    /*public static Socket cliente;
     public static DataOutputStream dataOut;
-    public static DataInputStream dataIn;
+    public static DataInputStream dataIn;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,34 +69,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             navigationView.setCheckedItem(R.id.nav_home);
         }
 
-        conectar();
+        //conectar();
+        //new TaskConectar().execute();
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()){
             case R.id.nav_home:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainFragment()).commit();
+                new TaskCambiarFragment().execute(new MainFragment());
+                //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainFragment()).commit();
                 break;
             case R.id.nav_trip:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TripFragment()).commit();
                 break;
             case R.id.nav_cards:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CardsFragment()).commit();
+                new TaskCambiarFragment().execute(new CardsFragment());
+                //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CardsFragment()).commit();
                 break;
             case R.id.nav_sales:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SalePointFragment()).commit();
+                new TaskCambiarFragment().execute(new SalePointFragment());
+                //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SalePointFragment()).commit();
                 break;
             case R.id.nav_log:
-                if(login = true){
-                    Intent intent = new Intent(this, MeActivity.class);
-                    startActivity(intent);
-                }else {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginFragment()).commit();
+                if(login){
+                    new TaskCambiarFragment().execute(new MeFragment());
+                }else{
+                    new TaskCambiarFragment().execute(new LoginFragment());
                 }
                 break;
             case R.id.nav_settings:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
+                new TaskCambiarFragment().execute(new SettingsFragment());
                 break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -104,9 +115,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
-    private void conectar(){
+    /*private void conectar(){
         final int PUERTO = 6000;
-        final String HOST = "192.168.1.13"/*"localhost"*/;
+        final String HOST = "192.168.1.13";
+        //"localhost";
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8)
         {
@@ -121,6 +133,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Logger.getLogger(LoginFragment.class.getName()).log(Level.SEVERE, null, ex);
             }
 
+        }
+    }*/
+
+    class TaskCambiarFragment extends AsyncTask<Fragment, Void, String>{
+
+        @Override
+        protected String doInBackground(Fragment... fragments) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragments[0]).commit();
+            return fragments[0].toString();
         }
     }
 }

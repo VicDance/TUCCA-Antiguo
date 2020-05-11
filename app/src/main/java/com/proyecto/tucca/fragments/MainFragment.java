@@ -2,7 +2,9 @@ package com.proyecto.tucca.fragments;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,6 +23,14 @@ import com.proyecto.tucca.FareSystemAPI;
 import com.proyecto.tucca.model.FareSystemList;
 import com.proyecto.tucca.LocationDialog;
 import com.proyecto.tucca.R;
+import com.proyecto.tucca.model.Zone;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,45 +38,77 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/*import static com.proyecto.tucca.activities.MainActivity.cliente;
+import static com.proyecto.tucca.activities.MainActivity.dataIn;
+import static com.proyecto.tucca.activities.MainActivity.dataOut;*/
+
 public class MainFragment extends Fragment {
     private SearchView searchView = null;
     private SearchView.OnQueryTextListener queryTextListener;
     private TextView zone;
+    private int size;
+    private Zone[] zonas;
+    private String[] nombreZonas;
+    private String[] newDatos;
+    public static Socket cliente;
+    public static DataOutputStream dataOut;
+    public static DataInputStream dataIn;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         zone = view.findViewById(R.id.text_view_zone);
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.ctan.es/v1/Consorcios/2/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        FareSystemAPI fareSystemAPI = retrofit.create(FareSystemAPI.class);
-        Call<FareSystemList> call = fareSystemAPI.getFareSystemList();
-        call.enqueue(new Callback<FareSystemList>() {
-            @Override
-            public void onResponse(Call<FareSystemList> call, Response<FareSystemList> response) {
-                if(!response.isSuccessful()){
-                    zone.setText("Code: " + response.code());
-                    return;
-                }
-                FareSystemList fareSystemList = response.body();
-                for(int i = 0; i < fareSystemList.getFareSystems().size(); i++){
-                    String content = "";
-                    content += fareSystemList.getFareSystems().get(i).getIdZone() + ": " +
-                            fareSystemList.getFareSystems().get(i).getNameZone() + "\n";
-
-                    zone.append(content);
+        try {
+            //new TaskConectar().execute();
+             conectar();
+            //dataOut = new DataOutputStream(cliente.getOutputStream());
+            dataOut.writeUTF("zonas");
+            dataOut.flush();
+            //dataIn = new DataInputStream(cliente.getInputStream());
+            size = dataIn.readInt();
+            zonas = new Zone[size];
+            for (int i = 0; i < size; i++) {
+                String datos;
+                try {
+                    datos = dataIn.readUTF();
+                    newDatos = datos.split("/");
+                    Zone zona = new Zone(newDatos[0], newDatos[1]);
+                    zonas[i] = zona;
+                } catch (IOException ex) {
+                    Logger.getLogger(TripFragment.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-
-            @Override
-            public void onFailure(Call<FareSystemList> call, Throwable t) {
-                zone.setText("Error: " + t.getMessage());
+            String content = "";
+            for(int i = 0; i < zonas.length; i++){
+                content += zonas[i].getIdZona() + ": " + zonas[i].getNombreZona() + "\n";
             }
-        });
+            zone.append(content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return view;
+    }
+
+    private void conectar(){
+        final int PUERTO = 6000;
+        final String HOST = "192.168.1.13";
+        //"localhost";
+        int SDK_INT = android.os.Build.VERSION.SDK_INT;
+        if (SDK_INT > 8)
+        {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            try {
+                cliente = new Socket(HOST, PUERTO);
+                dataOut = new DataOutputStream(cliente.getOutputStream());
+                dataIn = new DataInputStream(cliente.getInputStream());
+            } catch (IOException ex) {
+                Logger.getLogger(LoginFragment.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
     }
 
     @Override
@@ -135,4 +177,37 @@ public class MainFragment extends Fragment {
     private void showDialog() {
         new LocationDialog().show(getFragmentManager(), "Location Dialog");
     }
+
+    /*class TaskConectar extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected void onPreExecute() {
+            System.out.println("Conectando...");
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            final int PUERTO = 6000;
+            final String HOST = "192.168.1.13";
+            int SDK_INT = android.os.Build.VERSION.SDK_INT;
+            if (SDK_INT > 8)
+            {
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                        .permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+                try {
+                    System.out.println(PUERTO + " " + HOST);
+                    cliente = new Socket(HOST, PUERTO);
+                    System.out.println(cliente);
+                    dataOut = new DataOutputStream(cliente.getOutputStream());
+                    dataIn = new DataInputStream(cliente.getInputStream());
+                    //System.out.println(dataIn);
+                } catch (IOException ex) {
+                    Logger.getLogger(LoginFragment.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+            return null;
+        }
+    }*/
 }

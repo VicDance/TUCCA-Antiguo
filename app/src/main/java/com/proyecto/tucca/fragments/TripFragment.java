@@ -42,8 +42,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.proyecto.tucca.activities.MainActivity.dataIn;
-import static com.proyecto.tucca.activities.MainActivity.dataOut;
+/*import static com.proyecto.tucca.activities.MainActivity.dataIn;
+import static com.proyecto.tucca.activities.MainActivity.dataOut;*/
+import static com.proyecto.tucca.fragments.MainFragment.dataIn;
+import static com.proyecto.tucca.fragments.MainFragment.dataOut;
 
 public class TripFragment extends Fragment {
     private SearchView searchView = null;

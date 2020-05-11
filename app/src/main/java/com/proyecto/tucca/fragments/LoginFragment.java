@@ -14,16 +14,19 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.proyecto.tucca.R;
-import com.proyecto.tucca.activities.MeActivity;
+import com.proyecto.tucca.fragments.MeFragment;
 import com.proyecto.tucca.activities.RegisterActivity;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import static com.proyecto.tucca.activities.MainActivity.cliente;
+/*import static com.proyecto.tucca.activities.MainActivity.cliente;
 import static com.proyecto.tucca.activities.MainActivity.dataIn;
-import static com.proyecto.tucca.activities.MainActivity.dataOut;
+import static com.proyecto.tucca.activities.MainActivity.dataOut;*/
+import static com.proyecto.tucca.fragments.MainFragment.cliente;
+import static com.proyecto.tucca.fragments.MainFragment.dataIn;
+import static com.proyecto.tucca.fragments.MainFragment.dataOut;
 
 public class LoginFragment extends Fragment {
     private View view;
@@ -62,9 +65,7 @@ public class LoginFragment extends Fragment {
                         dataOut.flush();
                         String respuesta = dataIn.readUTF();
                         if(respuesta.equalsIgnoreCase("correcto")){
-                            login = true;
-                            Intent intent = new Intent(getContext(), MeActivity.class);
-                            startActivity(intent);
+                            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MeFragment()).commit();
                         }else{
                             new AlertDialog.Builder(getContext())
                                     .setTitle("No se pudo conectar")
