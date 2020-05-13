@@ -112,7 +112,6 @@ public class MeFragment extends Fragment {
                         return true;
                     }
                 });
-                return false;
             default:
                 break;
         }

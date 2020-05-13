@@ -18,7 +18,8 @@
             android:layout_height="50dp"
             android:hint="@string/user"
             android:textSize="20sp"
-            android:layout_marginBottom="30dp"/>
+            android:layout_marginBottom="30dp"
+            android:inputType="textCapSentences"/>
         <EditText
             android:id="@+id/edit_text_register_password"
             android:layout_width="300dp"

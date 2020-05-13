@@ -3,10 +3,12 @@ package com.proyecto.tucca.model;
 public class CreditCard {
     private String cardUser;
     private String textNumber;
+    private String cad;
 
-    public CreditCard(String cardUser, String textNumber){
+    public CreditCard(String cardUser, String textNumber, String cad){
         this.cardUser = cardUser;
         this.textNumber = textNumber;
+        this.cad = cad;
     }
 
     public String getCardUser() {
@@ -23,5 +25,13 @@ public class CreditCard {
 
     public void setTextNumber(String textNumber) {
         this.textNumber = textNumber;
+    }
+
+    public String getCad() {
+        return cad;
+    }
+
+    public void setCad(String cad) {
+        this.cad = cad;
     }
 }

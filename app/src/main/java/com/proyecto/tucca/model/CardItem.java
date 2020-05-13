@@ -1,4 +1,4 @@
-package com.proyecto.tucca;
+package com.proyecto.tucca.model;
 
 public class CardItem {
     private String textNumber;

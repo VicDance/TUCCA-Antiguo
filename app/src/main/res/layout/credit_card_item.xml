@@ -1,32 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:layout_margin="40dp"
-    app:cardCornerRadius="4dp">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="4dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/text_view_user_credit_card"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Propietario"
-            android:textSize="20sp"
-            android:textAlignment="center"/>
 
-        <TextView
-            android:id="@+id/text_view_number_credit_card"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Nº Tarjeta"
-            android:textSize="20sp"
-            android:textAlignment="center"/>
+            android:layout_margin="40dp"
+            app:cardCornerRadius="8dp"
+            app:cardBackgroundColor="@color/colorPrimaryDark">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/chip"
+                android:layout_margin="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/text_view_number_credit_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="70dp"
+                    android:text="Nº Tarjeta"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white"/>
+
+                <TextView
+                    android:id="@+id/text_view_cad_credit_card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Caduca final"
+                    android:textAllCaps="true"
+                    android:textSize="15sp"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/white"/>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/text_view_user_credit_card"
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Propietario"
+                        android:textSize="15sp"
+                        android:maxLines="1"
+                        android:textColor="@android:color/white"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/mastercard"
+                        android:layout_alignParentRight="true"/>
+                </RelativeLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
-</androidx.cardview.widget.CardView>
+</androidx.core.widget.NestedScrollView>

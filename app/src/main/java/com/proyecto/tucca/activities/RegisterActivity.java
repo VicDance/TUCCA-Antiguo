@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
@@ -16,6 +17,7 @@ import com.proyecto.tucca.R;
 import com.proyecto.tucca.fragments.DatePickerFragment;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.logging.Level;
@@ -23,6 +25,7 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.proyecto.tucca.fragments.MainFragment.dataIn;
 import static com.proyecto.tucca.fragments.MainFragment.dataOut;
 
 public class RegisterActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
@@ -33,6 +36,8 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
     private EditText editTextEmail;
     private EditText editTextPhone;
     private ImageButton datePicker;
+    private TextView textView;
+    private Long date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,27 +57,33 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
             public void onClick(View v) {
                 if (compruebaCampos() && compruebaTfno(String.valueOf(editTextPhone.getText())) &&
                         compruebaEmail(String.valueOf(editTextEmail.getText()))) {
-
                     try {
                         dataOut.writeUTF("encriptar");
                         dataOut.flush();
-                        dataOut.writeUTF(String.valueOf(editTextPassword.getText()));
+                        dataOut.writeUTF("cliente" + "/" + editTextUser.getText() + "/" + editTextPassword.getText() + "/"
+                        + editTextEmail.getText() + "/" + editTextPhone.getText() + "/" + date);
                         dataOut.flush();
+                        //System.out.println(date);
+                        String estado = dataIn.readUTF();
+                        if(estado.equalsIgnoreCase("correcto")){
+                            new AlertDialog.Builder(RegisterActivity.this)
+                                    .setTitle("Correcto")
+                                    .setMessage("Se ha registrado satisfactoriamente")
+                                    .show();
+                        }else{
+                            new AlertDialog.Builder(RegisterActivity.this)
+                                    .setTitle("Incorrecto")
+                                    .setMessage("No se ha podido registrar")
+                                    .show();
+                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    //encriptar = new Encriptar();
-                    /*try {
-                        String contraseña = new String(txtContraseña.getPassword());
-                        contraseñaCifrada = encriptar.encriptar(contraseña, CLAVE);
-                        java.sql.Date date = new java.sql.Date(dateChooserNacimiento.getDate().getTime());
-                        //System.out.println(contraseña);
-                        cdi.insertar(txtUsuario.getText(), contraseñaCifrada, txtCorreo.getText(), date, Integer.parseInt(txtTfno.getText()));
-                    } catch (Exception ex) {
-                        Logger.getLogger(RegisterForm.class.getName()).log(Level.SEVERE, null, ex);
-                    }*/
                 }else{
-                    //JOptionPane.showMessageDialog(this, "Campos vacíos");
+                    new AlertDialog.Builder(RegisterActivity.this)
+                            .setTitle("Campos vacios")
+                            .setMessage("Hay campos sin rellenar")
+                            .show();
                 }
             }
         });
@@ -145,8 +156,9 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
         c.set(Calendar.YEAR, year);
         c.set(Calendar.MONTH, month);
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        String currentDateString = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
-        TextView textView = findViewById(R.id.text_view_register_date);
+        String currentDateString = DateFormat.getDateInstance(/*DateFormat.DATE_FIELD*/).format(c.getTime());
+        textView = findViewById(R.id.text_view_register_date);
         textView.setText(currentDateString);
+        date = c.getTime().getTime();
     }
 }

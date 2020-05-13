@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.proyecto.tucca.CardItem;
+import com.proyecto.tucca.model.CardItem;
 import com.proyecto.tucca.adapters.CardsAdapter;
 import com.proyecto.tucca.R;
 import com.proyecto.tucca.activities.AddCardActivity;

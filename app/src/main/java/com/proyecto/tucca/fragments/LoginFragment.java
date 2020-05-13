@@ -59,7 +59,7 @@ public class LoginFragment extends Fragment {
                     try {
                         dataOut.writeUTF("inicio");
                         dataOut.flush();
-                        dataOut.writeUTF(editTextUser.getText().toString());
+                        dataOut.writeUTF(editTextUser.getText().toString().trim());
                         dataOut.flush();
                         dataOut.writeUTF(editTextPassword.getText().toString());
                         dataOut.flush();

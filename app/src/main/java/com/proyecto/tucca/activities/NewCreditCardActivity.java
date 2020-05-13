@@ -72,10 +72,11 @@ public class NewCreditCardActivity extends AppCompatActivity {
                 try {
                     dataOut.writeUTF("ntarjeta");
                     dataOut.flush();
-                    dataOut.writeUTF(scanResult.getFormattedCardNumber() + "/" + user.getId() + "/" + editTextCaducidad.getText() + "/"
+                    dataOut.writeUTF(scanResult.getRedactedCardNumber() + "-" + user.getId() + "-" + editTextCaducidad.getText() + "-"
                     + editTextTitular.getText());
                     dataOut.flush();
                     String estado = dataIn.readUTF();
+                    System.out.println(estado);
                     if(estado.equalsIgnoreCase("correcto")){
                         new AlertDialog.Builder(this)
                                 .setTitle("Correcto")

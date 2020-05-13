@@ -11,12 +11,17 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.proyecto.tucca.fragments.MainFragment;
 import com.proyecto.tucca.model.CreditCard;
 import com.proyecto.tucca.R;
 import com.proyecto.tucca.adapters.CardsAdapter;
 import com.proyecto.tucca.adapters.CreditCardsAdapter;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import static com.proyecto.tucca.fragments.MainFragment.dataIn;
+import static com.proyecto.tucca.fragments.MainFragment.dataOut;
 
 public class CreditCardActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
@@ -25,14 +30,32 @@ public class CreditCardActivity extends AppCompatActivity {
     private TextView textView;
     private ArrayList<CreditCard> creditCardItems = null;
     private Button btnNewCredit;
+    private int size;
+    private String[] newDatos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_credit_card);
         creditCardItems = new ArrayList<CreditCard>();
-        /*creditCardItems.add(new CreditCardItem("Vic","1234"));
-        creditCardItems.add(new CreditCardItem("Vic","5678"));*/
+        try {
+            dataOut.writeUTF("tarjetas");
+            dataOut.flush();
+            //System.out.println(dataIn.readUTF());
+            size = dataIn.readInt();
+            //System.out.println("size" + size);
+            CreditCard creditCard = null;
+            for(int i = 0; i < size; i++) {
+                String datos;
+                datos = dataIn.readUTF();
+                newDatos = datos.split("-");
+                creditCard = new CreditCard(newDatos[3], newDatos[0], newDatos[2]);
+                creditCardItems.add(creditCard);
+                //System.out.println(creditCard.getCardUser());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         buildRecycler();
         btnNewCredit = findViewById(R.id.btn_new_credit_card);
         btnNewCredit.setOnClickListener(new View.OnClickListener() {

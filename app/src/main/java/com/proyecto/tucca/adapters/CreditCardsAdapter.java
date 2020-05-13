@@ -28,11 +28,13 @@ public class CreditCardsAdapter extends RecyclerView.Adapter<CreditCardsAdapter.
     public static class CreditCardsViewHolder extends RecyclerView.ViewHolder{
         public TextView user;
         public TextView textNumber;
+        public TextView cad;
 
         public CreditCardsViewHolder(@NonNull View itemView, final CreditCardsAdapter.OnItemClickListener listener) {
             super(itemView);
             user = itemView.findViewById(R.id.text_view_user_credit_card);
             textNumber = itemView.findViewById(R.id.text_view_number_credit_card);
+            cad = itemView.findViewById(R.id.text_view_cad_credit_card);
             /*itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -55,7 +57,7 @@ public class CreditCardsAdapter extends RecyclerView.Adapter<CreditCardsAdapter.
     @NonNull
     @Override
     public CreditCardsAdapter.CreditCardsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.credit_card_item, parent, false);
         CreditCardsAdapter.CreditCardsViewHolder viewHolder = new CreditCardsAdapter.CreditCardsViewHolder(view, mListener);
         return viewHolder;
     }
@@ -65,6 +67,7 @@ public class CreditCardsAdapter extends RecyclerView.Adapter<CreditCardsAdapter.
         CreditCard currentItem = itemList.get(position);
         holder.user.setText(currentItem.getCardUser());
         holder.textNumber.setText(currentItem.getTextNumber());
+        holder.cad.setText(currentItem.getCad());
     }
 
     @Override

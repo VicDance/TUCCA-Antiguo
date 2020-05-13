@@ -8,7 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.proyecto.tucca.CardItem;
+import com.proyecto.tucca.model.CardItem;
 import com.proyecto.tucca.R;
 
 import java.util.ArrayList;
