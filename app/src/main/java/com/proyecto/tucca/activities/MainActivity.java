@@ -1,33 +1,19 @@
 package com.proyecto.tucca.activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
-import android.os.AsyncTask;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.google.android.material.navigation.NavigationView;
-import com.proyecto.tucca.fragments.CardsFragment;
-import com.proyecto.tucca.fragments.LoginFragment;
-import com.proyecto.tucca.fragments.MainFragment;
 import com.proyecto.tucca.R;
-import com.proyecto.tucca.fragments.MeFragment;
-import com.proyecto.tucca.fragments.SalePointFragment;
-import com.proyecto.tucca.fragments.SettingsFragment;
-import com.proyecto.tucca.fragments.TripFragment;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -36,86 +22,108 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static com.proyecto.tucca.fragments.LoginFragment.login;
-
-
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
-
-    private DrawerLayout drawerLayout;
-    /*public static Socket cliente;
+public class MainActivity extends AppCompatActivity /*implements NavigationView.OnNavigationItemSelectedListener*/{
+    public static Socket cliente;
     public static DataOutputStream dataOut;
-    public static DataInputStream dataIn;*/
+    public static DataInputStream dataIn;
+    private Button buttonRegister;
+    private Button buttonLogin;
+    private EditText editTextUser;
+    private EditText editTextPassword;
+    public static final String STRING_PREFERENCES = "fragments";
+    public static final String PREFERENCE_STATUS = "estado.button.sesion";
+    private RadioButton radioButton;
+    public static boolean login;
+    public static boolean invitado;
+    private TextView textViewInvitado;
+    public static String nombreCliente;
+    public static int idCliente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        drawerLayout = findViewById(R.id.drawer_layout);
-
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-
-        if(savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_home);
+        conectar();
+        if(getEstado()){
+            login = true;
+            Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+            startActivity(intent);
         }
-
-        //conectar();
-        //new TaskConectar().execute();
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()){
-            case R.id.nav_home:
-                new TaskCambiarFragment().execute(new MainFragment());
-                //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainFragment()).commit();
-                break;
-            case R.id.nav_trip:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new TripFragment()).commit();
-                break;
-            case R.id.nav_cards:
-                new TaskCambiarFragment().execute(new CardsFragment());
-                //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new CardsFragment()).commit();
-                break;
-            case R.id.nav_sales:
-                new TaskCambiarFragment().execute(new SalePointFragment());
-                //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SalePointFragment()).commit();
-                break;
-            case R.id.nav_log:
-                if(login){
-                    new TaskCambiarFragment().execute(new MeFragment());
+        textViewInvitado = findViewById(R.id.text_view_invitado);
+        radioButton = findViewById(R.id.radio_no_close);
+        buttonRegister = findViewById(R.id.button_register);
+        buttonRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+        editTextUser = findViewById(R.id.edit_text_user);
+        editTextPassword = findViewById(R.id.edit_text_password);
+        buttonLogin = findViewById(R.id.button_login);
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (editTextUser.getText().length() != 0 && editTextPassword.getText().length() != 0) {
+                    try {
+                        dataOut.writeUTF("inicio");
+                        dataOut.flush();
+                        dataOut.writeUTF(editTextUser.getText().toString().trim());
+                        dataOut.flush();
+                        dataOut.writeUTF(editTextPassword.getText().toString());
+                        dataOut.flush();
+                        String respuesta = dataIn.readUTF();
+                        if(respuesta.equalsIgnoreCase("correcto")){
+                            idCliente = dataIn.readInt();
+                            nombreCliente = editTextUser.getText().toString().trim();
+                            login = true;
+                            guardaEstado();
+                            Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                            intent.putExtra("nombre", editTextUser.getText().toString().trim());
+                            startActivity(intent);
+                            finish();
+                        }else{
+                            new AlertDialog.Builder(MainActivity.this)
+                                    .setTitle("No se pudo conectar")
+                                    .setMessage("Usuario o contraseña incorrectos")
+                                    .show();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (Throwable throwable) {
+                        throwable.printStackTrace();
+                    }
                 }else{
-                    new TaskCambiarFragment().execute(new LoginFragment());
+                    new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("No se pudo conectar")
+                            .setMessage("Alguno de los campos está vacío")
+                            .show();
                 }
-                break;
-            case R.id.nav_settings:
-                new TaskCambiarFragment().execute(new SettingsFragment());
-                break;
-        }
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
+            }
+        });
+
+        textViewInvitado.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                invitado = true;
+                Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
-    @Override
-    public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }else {
-            super.onBackPressed();
-        }
+    public void guardaEstado(){
+        SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES, MODE_PRIVATE);
+        preferences.edit().putBoolean(PREFERENCE_STATUS, radioButton.isChecked()).apply();
     }
 
-    /*private void conectar(){
+    public boolean getEstado(){
+        SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES, MODE_PRIVATE);
+        return preferences.getBoolean(PREFERENCE_STATUS, false);
+    }
+    private void conectar(){
         final int PUERTO = 6000;
         final String HOST = "192.168.1.13";
         //"localhost";
@@ -130,18 +138,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 dataOut = new DataOutputStream(cliente.getOutputStream());
                 dataIn = new DataInputStream(cliente.getInputStream());
             } catch (IOException ex) {
-                Logger.getLogger(LoginFragment.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(MainActivity.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-        }
-    }*/
-
-    class TaskCambiarFragment extends AsyncTask<Fragment, Void, String>{
-
-        @Override
-        protected String doInBackground(Fragment... fragments) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragments[0]).commit();
-            return fragments[0].toString();
         }
     }
 }

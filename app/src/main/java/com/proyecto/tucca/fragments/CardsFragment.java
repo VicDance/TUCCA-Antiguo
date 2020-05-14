@@ -25,9 +25,12 @@ import com.proyecto.tucca.adapters.CardsAdapter;
 import com.proyecto.tucca.R;
 import com.proyecto.tucca.activities.AddCardActivity;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
-import static com.proyecto.tucca.fragments.LoginFragment.login;
+import static com.proyecto.tucca.activities.MainActivity.dataIn;
+import static com.proyecto.tucca.activities.MainActivity.dataOut;
+import static com.proyecto.tucca.activities.MainActivity.login;
 
 public class CardsFragment extends Fragment {
     private View view;
@@ -36,6 +39,7 @@ public class CardsFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private TextView textView;
     private ArrayList<CardItem> cardItemList = null;
+    private int size;
 
     public CardsFragment() {
     }
@@ -46,8 +50,15 @@ public class CardsFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_cards, container, false);
 
         cardItemList = new ArrayList<CardItem>();
-        cardItemList.add(new CardItem("1234"));
-        cardItemList.add(new CardItem("5678"));
+        /*cardItemList.add(new CardItem("1234"));
+        cardItemList.add(new CardItem("5678"));*/
+        /*try {
+            dataOut.writeUTF("tarjetasb");
+            dataOut.flush();
+            size = dataIn.readInt();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
         recyclerView = view.findViewById(R.id.recycler_view_cards);
         if(login){
             buildRecycler();
@@ -98,7 +109,7 @@ public class CardsFragment extends Fragment {
         adapter.setOnItemClickListener(new CardsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Toast.makeText(getContext(), "Pulsado item " + position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "Pulsado item " + position, Toast.LENGTH_SHORT).show();
             }
         });
     }

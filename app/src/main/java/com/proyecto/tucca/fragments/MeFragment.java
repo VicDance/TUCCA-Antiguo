@@ -2,7 +2,6 @@ package com.proyecto.tucca.fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
@@ -15,20 +14,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.proyecto.tucca.R;
 import com.proyecto.tucca.activities.CreditCardActivity;
-import com.proyecto.tucca.fragments.LoginFragment;
+import com.proyecto.tucca.activities.MenuActivity;
 import com.proyecto.tucca.model.User;
 
 import java.io.IOException;
 
-/*import static com.proyecto.tucca.activities.MainActivity.dataIn;
-import static com.proyecto.tucca.activities.MainActivity.dataOut;*/
-import static com.proyecto.tucca.fragments.MainFragment.dataIn;
-import static com.proyecto.tucca.fragments.MainFragment.dataOut;
-import static com.proyecto.tucca.fragments.LoginFragment.login;
+import static com.proyecto.tucca.activities.MainActivity.dataIn;
+import static com.proyecto.tucca.activities.MainActivity.dataOut;
+import static com.proyecto.tucca.activities.MainActivity.invitado;
+import static com.proyecto.tucca.activities.MainActivity.login;
+import static com.proyecto.tucca.activities.MainActivity.nombreCliente;
 
 public class MeFragment extends Fragment {
     private TextView textViewUser;
@@ -39,10 +37,12 @@ public class MeFragment extends Fragment {
     private TextView textViewName;
     public static User user;
     private View view;
-    static String nombre;
-    static String correo;
-    static String tfno;
-    static String fecha_nac;
+    private String nombre;
+    private String contraseña;
+    private String correo;
+    private String tfno;
+    private String fecha_nac;
+    private String[] newDatos;
     private int id;
 
     @Nullable
@@ -56,34 +56,38 @@ public class MeFragment extends Fragment {
         textViewPhone = view.findViewById(R.id.text_view_phone);
         textViewName = view.findViewById(R.id.text_view_name);
         String datos = null;
-        try {
-            if(!login) {
+        //try {
+            if(login && !invitado) {
+                /*dataOut.writeUTF("cliente");
+                dataOut.flush();
+                dataOut.writeUTF(nombreCliente);
+                dataOut.flush();
                 datos = dataIn.readUTF();
-                String[] newDatos = datos.split("/");
+                newDatos = datos.split("/");
                 nombre = newDatos[0];
-                correo = newDatos[1];
-                fecha_nac = newDatos[2];
-                tfno = newDatos[3];
-                id = Integer.parseInt(newDatos[4]);
-                user = new User(id, nombre, correo, Integer.parseInt(tfno), fecha_nac);
+                contraseña = newDatos[1];
+                correo = newDatos[2];
+                fecha_nac = newDatos[3];
+                tfno = newDatos[4];
+
+                textViewUser.setText(nombre);
+                textViewBorn.setText(fecha_nac);
+                textViewEmail.setText(correo);
+                textViewPhone.setText(tfno);*/
             }
-            login = true;
-            textViewUser.setText(nombre);
-            textViewBorn.setText(fecha_nac);
-            textViewEmail.setText(correo);
-            textViewPhone.setText(tfno);
-            //textViewName.setText(nombre);
 
             btnExit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     login = false;
-                    getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginFragment()).commit();
+                    Intent intent = new Intent(getContext(), MenuActivity.class);
+                    startActivity(intent);
+                    //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginFragment()).commit();
                 }
             });
-        } catch (IOException e) {
+        /*} catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
         return view;
     }
 
@@ -95,9 +99,9 @@ public class MeFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        menu.clear();
+        //menu.clear();
+        //super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.add_menu, menu);
-        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override

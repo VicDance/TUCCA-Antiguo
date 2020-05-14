@@ -19,8 +19,8 @@ import java.io.IOException;
 import io.card.payment.CardIOActivity;
 import io.card.payment.CreditCard;
 
-import static com.proyecto.tucca.fragments.MainFragment.dataIn;
-import static com.proyecto.tucca.fragments.MainFragment.dataOut;
+import static com.proyecto.tucca.activities.MainActivity.dataIn;
+import static com.proyecto.tucca.activities.MainActivity.dataOut;
 import static com.proyecto.tucca.fragments.MeFragment.user;
 
 public class NewCreditCardActivity extends AppCompatActivity {

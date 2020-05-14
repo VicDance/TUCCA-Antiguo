@@ -1,39 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start">
-
-    <LinearLayout
+    android:paddingLeft="30dp"
+    android:paddingTop="30dp"
+    android:paddingRight="30dp">
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_person_loggin"
+            android:layout_centerHorizontal="true"/>
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            android:elevation="4dp"
-            android:textAlignment="center"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="200dp"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical">
 
-        <FrameLayout
-            android:id="@+id/fragment_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="35sp"
+                android:text="@string/user"
+                android:textSize="30sp"
+                android:textAlignment="center"
+                android:textIsSelectable="false"/>
+            <EditText
+                android:id="@+id/edit_text_user"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:maxLines="1"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="35sp"
+                android:layout_marginTop="20dp"
+                android:text="@string/password"
+                android:textSize="30sp"
+                android:textAlignment="center"
+                android:textIsSelectable="false"/>
+            <EditText
+                android:id="@+id/edit_text_password"
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="20dp"
+                android:inputType="textPassword"
+                android:maxLines="1"/>
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_menu" />
-</androidx.drawerlayout.widget.DrawerLayout>
+            <RadioButton
+                android:id="@+id/radio_no_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:text="No cerrar sesión"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button_login"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="450dp"
+            android:background="@drawable/rounded_button"
+            android:text="@string/log_in"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"/>
+        <Button
+            android:id="@+id/button_register"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="520dp"
+            android:background="@drawable/rounded_border"
+            android:text="@string/sign_up"
+            android:textColor="@android:color/holo_blue_light"
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/text_view_invitado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="600dp"
+            android:text="Continuar como invitado"
+            android:textSize="20sp"/>
+    </RelativeLayout>
+</androidx.core.widget.NestedScrollView>

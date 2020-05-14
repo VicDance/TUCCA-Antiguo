@@ -38,6 +38,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static com.proyecto.tucca.activities.MainActivity.cliente;
+import static com.proyecto.tucca.activities.MainActivity.dataIn;
+import static com.proyecto.tucca.activities.MainActivity.dataOut;
+import static com.proyecto.tucca.activities.MainActivity.invitado;
+
 /*import static com.proyecto.tucca.activities.MainActivity.cliente;
 import static com.proyecto.tucca.activities.MainActivity.dataIn;
 import static com.proyecto.tucca.activities.MainActivity.dataOut;*/
@@ -50,9 +55,9 @@ public class MainFragment extends Fragment {
     private Zone[] zonas;
     private String[] nombreZonas;
     private String[] newDatos;
-    public static Socket cliente;
-    public static DataOutputStream dataOut;
-    public static DataInputStream dataIn;
+    //public static Socket cliente;
+    //public static DataOutputStream dataOut;
+    //public static DataInputStream dataIn;
 
     @Nullable
     @Override
@@ -60,13 +65,11 @@ public class MainFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         zone = view.findViewById(R.id.text_view_zone);
         try {
-            //new TaskConectar().execute();
-             conectar();
-            //dataOut = new DataOutputStream(cliente.getOutputStream());
             dataOut.writeUTF("zonas");
             dataOut.flush();
-            //dataIn = new DataInputStream(cliente.getInputStream());
+            //System.out.println(dataIn.readUTF());
             size = dataIn.readInt();
+            //System.out.println(size);
             zonas = new Zone[size];
             for (int i = 0; i < size; i++) {
                 String datos;
@@ -90,7 +93,7 @@ public class MainFragment extends Fragment {
         return view;
     }
 
-    private void conectar(){
+    /*private void conectar(){
         final int PUERTO = 6000;
         final String HOST = "192.168.1.13";
         //"localhost";
@@ -109,7 +112,7 @@ public class MainFragment extends Fragment {
             }
 
         }
-    }
+    }*/
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

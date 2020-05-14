@@ -26,7 +26,7 @@
             android:title="@string/interest"
             android:icon="@drawable/ic_interesting_places"/>
         <item android:id="@+id/nav_log"
-            android:title="@string/login"
+            android:title="@string/me"
             android:icon="@drawable/ic_logging"/>
         <item android:id="@+id/nav_settings"
             android:title="@string/settings"

@@ -25,8 +25,8 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.proyecto.tucca.fragments.MainFragment.dataIn;
-import static com.proyecto.tucca.fragments.MainFragment.dataOut;
+import static com.proyecto.tucca.activities.MainActivity.dataIn;
+import static com.proyecto.tucca.activities.MainActivity.dataOut;
 
 public class RegisterActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     private Button button;
@@ -63,7 +63,6 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                         dataOut.writeUTF("cliente" + "/" + editTextUser.getText() + "/" + editTextPassword.getText() + "/"
                         + editTextEmail.getText() + "/" + editTextPhone.getText() + "/" + date);
                         dataOut.flush();
-                        //System.out.println(date);
                         String estado = dataIn.readUTF();
                         if(estado.equalsIgnoreCase("correcto")){
                             new AlertDialog.Builder(RegisterActivity.this)

@@ -42,10 +42,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/*import static com.proyecto.tucca.activities.MainActivity.dataIn;
-import static com.proyecto.tucca.activities.MainActivity.dataOut;*/
-import static com.proyecto.tucca.fragments.MainFragment.dataIn;
-import static com.proyecto.tucca.fragments.MainFragment.dataOut;
+import static com.proyecto.tucca.activities.MainActivity.dataIn;
+import static com.proyecto.tucca.activities.MainActivity.dataOut;
 
 public class TripFragment extends Fragment {
     private SearchView searchView = null;
@@ -53,7 +51,6 @@ public class TripFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private View view;
     private Retrofit retrofit;
-    private FareSystemAPI fareSystemAPI;
     private Spinner spinnerOriginCity;
     private Spinner spinnerDestinyCity;
     private Spinner spinnerOriginCentre;
@@ -67,8 +64,6 @@ public class TripFragment extends Fragment {
     private ArrayAdapter<String> adapterOriginCentre;
     private ArrayAdapter<String> adapterDestinyCities;
     private ArrayAdapter<String> adapterDestinyCentre;
-    //private String[] tableHeaders = {String.valueOf(R.string.line), String.valueOf(R.string.stops), String.valueOf(R.string.frequency)};
-    //private String[] tableRows;
     private Button btnSearch;
     private Button btnPay;
     private TextView textViewLines;
