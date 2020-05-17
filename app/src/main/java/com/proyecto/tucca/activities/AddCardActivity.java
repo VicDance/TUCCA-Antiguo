@@ -54,6 +54,11 @@ public class AddCardActivity extends AppCompatActivity {
                                                 .setTitle("Correcto")
                                                 .setMessage("Tarjeta creada correctamente")
                                                 .show();
+                                    }else{
+                                        new AlertDialog.Builder(AddCardActivity.this)
+                                                .setTitle(estado)
+                                                .setMessage("No se pudo crear la tarjeta")
+                                                .show();
                                     }
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -78,7 +83,29 @@ public class AddCardActivity extends AppCompatActivity {
                         .setMessage("¿Quiere crear una tarjeta tipo jubilado?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(AddCardActivity.this, "Se creó la tarjeta", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(AddCardActivity.this, "Se creó la tarjeta", Toast.LENGTH_SHORT).show();
+                                try {
+                                    dataOut.writeUTF("tarjeta_ju");
+                                    dataOut.flush();
+                                    long numTarjeta = rnd.nextLong();
+                                    //System.out.println(dig13);
+                                    dataOut.writeUTF(numTarjeta + "/" + idCliente);
+                                    dataOut.flush();
+                                    String estado = dataIn.readUTF();
+                                    if(estado.equalsIgnoreCase("correcto")){
+                                        new AlertDialog.Builder(AddCardActivity.this)
+                                                .setTitle(estado)
+                                                .setMessage("Tarjeta creada correctamente")
+                                                .show();
+                                    }else{
+                                        new AlertDialog.Builder(AddCardActivity.this)
+                                                .setTitle(estado)
+                                                .setMessage("No se pudo crear la tarjeta")
+                                                .show();
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener(){
@@ -99,7 +126,29 @@ public class AddCardActivity extends AppCompatActivity {
                         .setMessage("¿Quiere crear una tarjeta tipo estudiante?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                Toast.makeText(AddCardActivity.this, "Se creó la tarjeta", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(AddCardActivity.this, "Se creó la tarjeta", Toast.LENGTH_SHORT).show();
+                                try {
+                                    dataOut.writeUTF("tarjeta_estu");
+                                    dataOut.flush();
+                                    long numTarjeta = rnd.nextLong();
+                                    //System.out.println(dig13);
+                                    dataOut.writeUTF(numTarjeta + "/" + idCliente);
+                                    dataOut.flush();
+                                    String estado = dataIn.readUTF();
+                                    if(estado.equalsIgnoreCase("correcto")){
+                                        new AlertDialog.Builder(AddCardActivity.this)
+                                                .setTitle(estado)
+                                                .setMessage("Tarjeta creada correctamente")
+                                                .show();
+                                    }else{
+                                        new AlertDialog.Builder(AddCardActivity.this)
+                                                .setTitle(estado)
+                                                .setMessage("No se pudo crear la tarjeta")
+                                                .show();
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener(){
