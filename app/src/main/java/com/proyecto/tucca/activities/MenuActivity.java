@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.proyecto.tucca.R;
@@ -43,22 +44,22 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        String newString;
+        //String newString;
         if(savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
+            /*Bundle extras = getIntent().getExtras();
             if(extras == null) {
                 newString= null;
             } else {
                 newString= extras.getString("nombre");
                 System.out.println(newString);
-                //TextView textView = findViewById(R.id.text_view_name);
-                //textView.setText(newString);
-            }
+                TextView textView = findViewById(R.id.text_view_name);
+                textView.setText(newString);
+            }*/
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_home);
-        }else {
+        }/*else {
             newString= (String) savedInstanceState.getSerializable("nombre");
-        }
+        }*/
     }
 
     @Override
@@ -81,6 +82,14 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_log:
                 new TaskCambiarFragment().execute(new MeFragment());
+                /*String newString;
+                Bundle extras = getIntent().getExtras();
+                if(extras == null) {
+                    newString= null;
+                } else {
+                    newString = extras.getString("nombre");
+                    System.out.println(newString);
+                }*/
                 break;
             case R.id.nav_settings:
                 new TaskCambiarFragment().execute(new SettingsFragment());

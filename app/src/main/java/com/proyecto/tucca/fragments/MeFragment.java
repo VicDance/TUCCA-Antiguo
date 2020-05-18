@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.proyecto.tucca.R;
 import com.proyecto.tucca.activities.CreditCardActivity;
+import com.proyecto.tucca.activities.MainActivity;
 import com.proyecto.tucca.activities.MenuActivity;
 import com.proyecto.tucca.model.User;
 
@@ -24,6 +25,8 @@ import java.io.IOException;
 
 import static com.proyecto.tucca.activities.MainActivity.dataIn;
 import static com.proyecto.tucca.activities.MainActivity.dataOut;
+//import static com.proyecto.tucca.activities.MainActivity.guardado;
+import static com.proyecto.tucca.activities.MainActivity.getDatos;
 import static com.proyecto.tucca.activities.MainActivity.invitado;
 import static com.proyecto.tucca.activities.MainActivity.login;
 import static com.proyecto.tucca.activities.MainActivity.nombreCliente;
@@ -56,11 +59,11 @@ public class MeFragment extends Fragment {
         textViewPhone = view.findViewById(R.id.text_view_phone);
         textViewName = view.findViewById(R.id.text_view_name);
         String datos = null;
-        //try {
-            if(login && !invitado) {
-                /*dataOut.writeUTF("cliente");
+        try {
+            if(login) {
+                dataOut.writeUTF("cliente");
                 dataOut.flush();
-                dataOut.writeUTF(nombreCliente);
+                dataOut.writeUTF(getDatos(getContext()));
                 dataOut.flush();
                 datos = dataIn.readUTF();
                 newDatos = datos.split("/");
@@ -73,7 +76,7 @@ public class MeFragment extends Fragment {
                 textViewUser.setText(nombre);
                 textViewBorn.setText(fecha_nac);
                 textViewEmail.setText(correo);
-                textViewPhone.setText(tfno);*/
+                textViewPhone.setText(tfno);
             }
 
             btnExit.setOnClickListener(new View.OnClickListener() {
@@ -85,9 +88,9 @@ public class MeFragment extends Fragment {
                     //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginFragment()).commit();
                 }
             });
-        /*} catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
         return view;
     }
 

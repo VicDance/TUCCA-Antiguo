@@ -3,6 +3,7 @@ package com.proyecto.tucca.activities;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -22,7 +23,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class MainActivity extends AppCompatActivity /*implements NavigationView.OnNavigationItemSelectedListener*/{
+public class MainActivity extends AppCompatActivity /*implements NavigationView.OnNavigationItemSelectedListener*/ {
     public static Socket cliente;
     public static DataOutputStream dataOut;
     public static DataInputStream dataIn;
@@ -31,26 +32,44 @@ public class MainActivity extends AppCompatActivity /*implements NavigationView.
     private EditText editTextUser;
     private EditText editTextPassword;
     public static final String STRING_PREFERENCES = "fragments";
+    public static final String STRING_NAME_PREFERENCES = "user";
     public static final String PREFERENCE_STATUS = "estado.button.sesion";
     private RadioButton radioButton;
     public static boolean login;
     public static boolean invitado;
+    //public static boolean guardado;
     private TextView textViewInvitado;
     public static String nombreCliente;
+    /*public static String correoCliente;
+    public static String tfnoCliente;
+    public static String nacimientoCliente;*/
     public static int idCliente;
+    private boolean activado;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         conectar();
-        if(getEstado()){
+        if (getEstado()) {
             login = true;
+            //guardado = true;
             Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+            //intent.putExtra("nombre", nombreCliente);
             startActivity(intent);
         }
         textViewInvitado = findViewById(R.id.text_view_invitado);
         radioButton = findViewById(R.id.radio_no_close);
+        activado = radioButton.isChecked();
+        radioButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (activado) {
+                    radioButton.setChecked(false);
+                }
+                activado = radioButton.isChecked();
+            }
+        });
         buttonRegister = findViewById(R.id.button_register);
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,16 +93,17 @@ public class MainActivity extends AppCompatActivity /*implements NavigationView.
                         dataOut.writeUTF(editTextPassword.getText().toString());
                         dataOut.flush();
                         String respuesta = dataIn.readUTF();
-                        if(respuesta.equalsIgnoreCase("correcto")){
+                        if (respuesta.equalsIgnoreCase("correcto")) {
                             idCliente = dataIn.readInt();
-                            nombreCliente = editTextUser.getText().toString().trim();
+                            //nombreCliente = editTextUser.getText().toString().trim();
                             login = true;
                             guardaEstado();
+                            guardarDatos();
                             Intent intent = new Intent(MainActivity.this, MenuActivity.class);
-                            intent.putExtra("nombre", editTextUser.getText().toString().trim());
+                            //intent.putExtra("nombre", editTextUser.getText().toString().trim());
                             startActivity(intent);
                             finish();
-                        }else{
+                        } else {
                             new AlertDialog.Builder(MainActivity.this)
                                     .setTitle("No se pudo conectar")
                                     .setMessage("Usuario o contraseña incorrectos")
@@ -94,7 +114,7 @@ public class MainActivity extends AppCompatActivity /*implements NavigationView.
                     } catch (Throwable throwable) {
                         throwable.printStackTrace();
                     }
-                }else{
+                } else {
                     new AlertDialog.Builder(MainActivity.this)
                             .setTitle("No se pudo conectar")
                             .setMessage("Alguno de los campos está vacío")
@@ -114,22 +134,32 @@ public class MainActivity extends AppCompatActivity /*implements NavigationView.
         });
     }
 
-    public void guardaEstado(){
+    public void guardaEstado() {
         SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES, MODE_PRIVATE);
         preferences.edit().putBoolean(PREFERENCE_STATUS, radioButton.isChecked()).apply();
     }
 
-    public boolean getEstado(){
+    public boolean getEstado() {
         SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES, MODE_PRIVATE);
         return preferences.getBoolean(PREFERENCE_STATUS, false);
     }
-    private void conectar(){
+
+    public void guardarDatos(){
+        SharedPreferences preferences = getSharedPreferences(STRING_PREFERENCES, MODE_PRIVATE);
+        preferences.edit().putString(STRING_NAME_PREFERENCES, editTextUser.getText().toString().trim()).apply();
+    }
+
+    public static String getDatos(Context context){
+        SharedPreferences preferences = context.getSharedPreferences(STRING_PREFERENCES, MODE_PRIVATE);
+        return preferences.getString(STRING_NAME_PREFERENCES, "");
+    }
+
+    private void conectar() {
         final int PUERTO = 6000;
         final String HOST = "192.168.1.13";
         //"localhost";
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
-        if (SDK_INT > 8)
-        {
+        if (SDK_INT > 8) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
                     .permitAll().build();
             StrictMode.setThreadPolicy(policy);
