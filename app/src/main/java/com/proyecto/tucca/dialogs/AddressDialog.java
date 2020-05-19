@@ -1,4 +1,4 @@
-package com.proyecto.tucca;
+package com.proyecto.tucca.dialogs;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
+
+import com.proyecto.tucca.R;
 
 public class AddressDialog extends DialogFragment {
     @NonNull

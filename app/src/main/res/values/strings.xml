@@ -45,4 +45,17 @@
     <string name="exit">Cerrar sesión</string>
     <string name="born_date">Fecha nacimiento</string>
     <string name="new_credit_card">Nueva tarjeta</string>
+    <string name="correct">Correcto</string>
+    <string name="incorrect">Incorrecto</string>
+    <string name="incorrect_message">No se pudo completar la operación</string>
+    <string name="invalid">Inválido</string>
+    <string name="deleteCard">Borrar tarjeta</string>
+    <string name="textDeleteCard">¿Está seguro de querer borrar la tarjeta?</string>
+    <string name="money">Saldo</string>
+    <string name="pay">Pagar</string>
+    <string name="reload">Recargar tarjeta</string>
+    <string name="attention">Atención</string>
+    <string name="payment_instruction">Ponga el dispositivo hacia abajo para realizar el pago</string>
+    <string name="no_money">Para utilizar la tarjeta, debe tener saldo</string>
+    <string name="insert_quantity">Introduzca cantidad para la recarga</string>
 </resources>

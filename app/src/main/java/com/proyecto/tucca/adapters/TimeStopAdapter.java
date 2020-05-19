@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.proyecto.tucca.R;
-import com.proyecto.tucca.TimeStopsItem;
+import com.proyecto.tucca.model.TimeStopsItem;
 
 import java.util.ArrayList;
 

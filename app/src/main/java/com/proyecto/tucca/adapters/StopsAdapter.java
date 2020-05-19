@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.proyecto.tucca.R;
-import com.proyecto.tucca.StopsItem;
+import com.proyecto.tucca.model.StopsItem;
 
 import java.util.ArrayList;
 

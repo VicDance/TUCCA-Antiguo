@@ -23,16 +23,24 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.proyecto.tucca.model.Centre;
 import com.proyecto.tucca.model.City;
-import com.proyecto.tucca.model.CityList;
 import com.proyecto.tucca.FareSystemAPI;
 import com.proyecto.tucca.model.LineList;
 import com.proyecto.tucca.R;
+import com.proyecto.tucca.viewmodel.LiveDataCentre;
+import com.proyecto.tucca.viewmodel.LiveDataCity;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -69,6 +77,8 @@ public class TripFragment extends Fragment {
     private TextView textViewLines;
     private int size;
     private String[] newDatos;
+    private LiveDataCity liveDataCity;
+    private LiveDataCentre liveDataCentre;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Nullable
@@ -76,14 +86,20 @@ public class TripFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_trip, container, false);
         listarMunicipios();
-        //listarNucleosOrigen();
-        btnPay = view.findViewById(R.id.btn_pay_trip);
-        btnPay.setOnClickListener(new View.OnClickListener() {
+        btnSearch = view.findViewById(R.id.btn_search_trip);
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        //btnPay = view.findViewById(R.id.btn_pay_trip);
+        /*btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "Pagar viaje", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
         return view;
     }
 
@@ -120,16 +136,30 @@ public class TripFragment extends Fragment {
         adapterOriginCities.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerOriginCity.setAdapter(adapterOriginCities);
         spinnerOriginCity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                liveDataCity = new ViewModelProvider((ViewModelStoreOwner) getContext()).get(LiveDataCity.class);
+                //liveDataCity.getCityList();
                 int idMunicipio = 0;
                 String ciudad = (String) parent.getSelectedItem();
                 for (int i = 0; i < listaMunicipios.length; i++) {
                     if (ciudad.equalsIgnoreCase(listaMunicipios[i].getNombreMunicipio())) {
                         idMunicipio = listaMunicipios[i].getIdMunicipio();
+                        //liveDataCity.addCity(new City(idMunicipio, ciudad));
+                        //city.setIdMunicipio(idMunicipio);
+                        break;
                     }
                 }
+                liveDataCity.getCityList().observe((LifecycleOwner) getContext(), new Observer<List<City>>() {
+                    @Override
+                    public void onChanged(List<City> cities) {
+                        for (City city : cities) {
+                            cities.add(city);
+                        }
+                        adapterOriginCentre.notifyDataSetChanged();
+                    }
+                });
+
                 listarNucleos(idMunicipio);
                 setSpinnerOriginCentre();
             }
@@ -150,13 +180,26 @@ public class TripFragment extends Fragment {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                liveDataCity = new ViewModelProvider((ViewModelStoreOwner) getContext()).get(LiveDataCity.class);
                 int idMunicipio = 0;
                 String ciudad = (String) parent.getSelectedItem();
                 for (int i = 0; i < listaMunicipios.length; i++) {
                     if (ciudad.equalsIgnoreCase(listaMunicipios[i].getNombreMunicipio())) {
                         idMunicipio = listaMunicipios[i].getIdMunicipio();
+                        //liveDataCity.addCity(new City(idMunicipio, ciudad));
+                        break;
                     }
                 }
+                liveDataCity.getCityList().observe((LifecycleOwner) getContext(), new Observer<List<City>>() {
+                    @Override
+                    public void onChanged(List<City> cities) {
+                        for (City city : cities) {
+                            cities.add(city);
+                            liveDataCity.addCity(city);
+                        }
+                        adapterOriginCentre.notifyDataSetChanged();
+                    }
+                });
                 listarNucleos(idMunicipio);
                 setSpinnerDestinyCentre();
             }
@@ -167,18 +210,6 @@ public class TripFragment extends Fragment {
             }
         });
     }
-
-    /*private void getSelectedCity(View view){
-        String ciudad = (String) spinnerOriginCity.getSelectedItem();
-        long id = 0;
-        for(int i = 0; i < listaMunicipios.length; i++){
-            if(ciudad.equalsIgnoreCase(listaMunicipios[i].getNombreMunicipio())){
-                id = listaMunicipios[i].getIdMunicipio();
-            }
-        }
-        City city = new City(id, ciudad);
-        displayCityInfo(city);
-    }*/
 
     private void displayCityInfo(City city) {
         long id = city.getIdMunicipio();
@@ -223,20 +254,121 @@ public class TripFragment extends Fragment {
             ex.printStackTrace();
         }
     }
+
     public void setSpinnerOriginCentre() {
         spinnerOriginCentre = view.findViewById(R.id.spinner_origin_centre);
         adapterOriginCentre = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaNombreNucleos);
         adapterOriginCentre.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerOriginCentre.setAdapter(adapterOriginCentre);
+        spinnerOriginCentre.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                liveDataCentre = new ViewModelProvider((ViewModelStoreOwner) getContext()).get(LiveDataCentre.class);
+                int idNucleo = 0;
+                String nucleo = (String) parent.getSelectedItem();
+                for (int i = 0; i < listaNucleos.length; i++) {
+                    if (nucleo.equalsIgnoreCase(listaNucleos[i].getNombreNucleo())) {
+                        idNucleo = listaNucleos[i].getIdNucleo();
+                        break;
+                    }
+                }
+                liveDataCentre.getCentreList().observe((LifecycleOwner) getContext(), new Observer<List<Centre>>() {
+                    @Override
+                    public void onChanged(List<Centre> centres) {
+                        for (Centre centre : centres) {
+                            centres.add(centre);
+                            liveDataCentre.addCentre(centre);
+                        }
+                        adapterOriginCentre.notifyDataSetChanged();
+                    }
+                });
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        //liveDataCentre.getCentreList();
+        /*liveDataCentre.getCentreList().observe((LifecycleOwner) getContext(), new Observer<List<Centre>>() {
+            @Override
+            public void onChanged(List<Centre> centres) {
+                for (Centre centre : centres) {
+                    //centres.add(centre);
+                    liveDataCentre.addCentre(centre);
+                }
+                adapterOriginCentre.notifyDataSetChanged();
+            }
+        });*/
+        /*spinnerOriginCentre.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                liveDataCity = new ViewModelProvider((ViewModelStoreOwner) getContext()).get(LiveDataCity.class);
+                liveDataCity.getCityList();
+                liveDataCentre = new ViewModelProvider((ViewModelStoreOwner) getContext()).get(LiveDataCentre.class);
+                liveDataCentre.getCentreList();
+                String nucleo = (String) parent.getSelectedItem();
+                int idNucleo = 0;
+                int idMunicipio = 0;
+                char idZona;
+                for (int i = 0; i < listaNucleos.length; i++) {
+                    if (nucleo.equalsIgnoreCase(listaNucleos[i].getNombreNucleo())) {
+                        System.out.println("entra");
+                        idNucleo = listaNucleos[i].getIdNucleo();
+                        idMunicipio = listaNucleos[i].getIdMunicipio();
+                        //idZona = listaNucleos[i].getIdZona();
+                        liveDataCentre.addCentre(new Centre(idNucleo));
+                        liveDataCity.addCity(new City(idMunicipio));
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });*/
     }
+
+    /*final Observer<List<Centre>> listObserverOriginCentre = new Observer<List<Centre>>() {
+        @Override
+        public void onChanged(@Nullable List<Centre> userList) {
+            String texto = "";
+            for(int i=0; i<userList.size(); i++){
+                //texto += userList.get(i).getNombre() + " " + userList.get(i).getEdad() +"\n";
+            }
+            //tvLiveData.setText(texto);
+        }
+    };
+
+        liveDataUserViewModel.getUserList().observe(this, listObserver);*/
 
     private void setSpinnerDestinyCentre() {
         spinnerDestinyCentre = view.findViewById(R.id.spinner_destiny_centre);
         adapterDestinyCentre = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listaNombreNucleos);
         adapterDestinyCentre.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerDestinyCentre.setAdapter(adapterDestinyCentre);
+        spinnerDestinyCentre.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                liveDataCentre = new ViewModelProvider((ViewModelStoreOwner) getContext()).get(LiveDataCentre.class);
+                liveDataCentre.getCentreList().observe((LifecycleOwner) getContext(), new Observer<List<Centre>>() {
+                    @Override
+                    public void onChanged(List<Centre> centres) {
+                        for (Centre centre : centres) {
+                            centres.add(centre);
+                            liveDataCentre.addCentre(centre);
+                        }
+                        adapterOriginCentre.notifyDataSetChanged();
+                    }
+                });
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 
     public void listarPlanificador(long idLinea) {

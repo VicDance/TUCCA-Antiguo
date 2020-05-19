@@ -2,9 +2,7 @@ package com.proyecto.tucca.fragments;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,29 +17,16 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
-import com.proyecto.tucca.FareSystemAPI;
-import com.proyecto.tucca.model.FareSystemList;
-import com.proyecto.tucca.LocationDialog;
+import com.proyecto.tucca.dialogs.LocationDialog;
 import com.proyecto.tucca.R;
 import com.proyecto.tucca.model.Zone;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static com.proyecto.tucca.activities.MainActivity.cliente;
 import static com.proyecto.tucca.activities.MainActivity.dataIn;
 import static com.proyecto.tucca.activities.MainActivity.dataOut;
-import static com.proyecto.tucca.activities.MainActivity.invitado;
 
 /*import static com.proyecto.tucca.activities.MainActivity.cliente;
 import static com.proyecto.tucca.activities.MainActivity.dataIn;
@@ -157,6 +142,7 @@ public class MainFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        searchView.setOnQueryTextListener(queryTextListener);
         switch (item.getItemId()) {
             case R.id.action_search:
                 // Not implemented here
@@ -169,12 +155,12 @@ public class MainFragment extends Fragment {
                         return true;
                     }
                 });
-                break;
+                return true;
             default:
-                break;
+                return super.onOptionsItemSelected(item);
         }
-        searchView.setOnQueryTextListener(queryTextListener);
-        return super.onOptionsItemSelected(item);
+        //searchView.setOnQueryTextListener(queryTextListener);
+        //return super.onOptionsItemSelected(item);
     }
 
     private void showDialog() {

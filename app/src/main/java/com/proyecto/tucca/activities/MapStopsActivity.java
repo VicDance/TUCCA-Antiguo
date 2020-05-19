@@ -15,7 +15,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.proyecto.tucca.R;
 import com.proyecto.tucca.adapters.TimeStopAdapter;
-import com.proyecto.tucca.TimeStopsItem;
+import com.proyecto.tucca.model.TimeStopsItem;
 
 import java.util.ArrayList;
 

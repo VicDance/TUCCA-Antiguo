@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.proyecto.tucca.activities.MapStopsActivity;
 import com.proyecto.tucca.R;
 import com.proyecto.tucca.adapters.StopsAdapter;
-import com.proyecto.tucca.StopsItem;
+import com.proyecto.tucca.model.StopsItem;
 
 import java.util.ArrayList;
 

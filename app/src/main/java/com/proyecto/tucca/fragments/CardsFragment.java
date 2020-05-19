@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.proyecto.tucca.dialogs.CardDialog;
 import com.proyecto.tucca.model.CardItem;
 import com.proyecto.tucca.adapters.CardsAdapter;
 import com.proyecto.tucca.R;
@@ -82,8 +83,8 @@ public class CardsFragment extends Fragment {
             public void onSwiped(@NonNull final RecyclerView.ViewHolder viewHolder, int direction) {
                 viewHolder.getAdapterPosition();
                 new AlertDialog.Builder(getContext())
-                        .setTitle("Delete entry")
-                        .setMessage("Are you sure you want to delete this entry?")
+                        .setTitle(R.string.deleteCard)
+                        .setMessage(R.string.textDeleteCard)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 try {
@@ -94,14 +95,14 @@ public class CardsFragment extends Fragment {
                                     String estado = dataIn.readUTF();
                                     if(estado.equalsIgnoreCase("correcto")){
                                         new AlertDialog.Builder(getContext())
-                                                .setTitle(estado.toUpperCase())
+                                                .setTitle(String.valueOf(R.string.correct).toUpperCase())
                                                 .setMessage("Borrado existoso")
                                                 .show();
                                     }
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
-                                System.out.println(viewHolder.getAdapterPosition());
+                                //System.out.println(viewHolder.getAdapterPosition());
                             }
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -127,7 +128,7 @@ public class CardsFragment extends Fragment {
         adapter.setOnItemClickListener(new CardsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Toast.makeText(getContext(), "Pulsado item " + position, Toast.LENGTH_SHORT).show();
+                showDialog();
             }
         });
     }
@@ -164,5 +165,18 @@ public class CardsFragment extends Fragment {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showDialog() {
+        try {
+            dataOut.writeUTF("tarjeta");
+            dataOut.flush();
+            textView = view.findViewById(R.id.text_view_number_card);
+            dataOut.writeUTF(textView.getText().toString());
+            dataOut.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        new CardDialog().show(getFragmentManager(), "Card Dialog");
     }
 }

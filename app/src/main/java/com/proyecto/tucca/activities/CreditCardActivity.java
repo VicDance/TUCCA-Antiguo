@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.proyecto.tucca.dialogs.ReloadDialog;
 import com.proyecto.tucca.fragments.MainFragment;
 import com.proyecto.tucca.model.CreditCard;
 import com.proyecto.tucca.R;
@@ -41,9 +42,7 @@ public class CreditCardActivity extends AppCompatActivity {
     private Button btnNewCredit;
     private int size;
     private String[] newDatos;
-    private SensorManager sensorManager;
-    private Sensor gyroscopeSensor;
-    private SensorEventListener sensorEventListener;
+    private String newString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,19 +68,6 @@ public class CreditCardActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         buildRecycler();
-        sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        gyroscopeSensor = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
-        sensorEventListener = new SensorEventListener() {
-            @Override
-            public void onSensorChanged(SensorEvent event) {
-
-            }
-
-            @Override
-            public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-            }
-        };
         btnNewCredit = findViewById(R.id.btn_new_credit_card);
         btnNewCredit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,11 +88,22 @@ public class CreditCardActivity extends AppCompatActivity {
         adapter.setOnItemClickListener(new CreditCardsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                /*new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("No se pudo conectar")
-                        .setMessage("Usuario o contraseña incorrectos")
-                        .show();*/
+                //String newString;
+                Bundle extras = getIntent().getExtras();
+                if(extras == null) {
+                    newString= null;
+                } else {
+                    newString = extras.getString("recarga");
+                    System.out.println(newString);
+                    showDialog();
+                }
             }
         });
+    }
+
+    private void showDialog() {
+        ReloadDialog rd = new ReloadDialog();
+        rd.setMessage(newString);
+        rd.show(getSupportFragmentManager(), "Card Dialog");
     }
 }
