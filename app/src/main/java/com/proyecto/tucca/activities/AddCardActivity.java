@@ -2,6 +2,8 @@ package com.proyecto.tucca.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.proyecto.tucca.R;
+import com.proyecto.tucca.fragments.CardsFragment;
 
 import java.io.IOException;
 import java.util.Random;
@@ -51,12 +54,12 @@ public class AddCardActivity extends AppCompatActivity {
                                     String estado = dataIn.readUTF();
                                     if(estado.equalsIgnoreCase("correcto")){
                                         new AlertDialog.Builder(AddCardActivity.this)
-                                                .setTitle(String.valueOf(R.string.correct).toUpperCase())
+                                                .setTitle(R.string.correct)
                                                 .setMessage("Tarjeta creada correctamente")
                                                 .show();
                                     }else{
                                         new AlertDialog.Builder(AddCardActivity.this)
-                                                .setTitle(String.valueOf(R.string.incorrect).toUpperCase())
+                                                .setTitle(R.string.incorrect)
                                                 .setMessage("No se pudo crear la tarjeta")
                                                 .show();
                                     }
@@ -93,17 +96,17 @@ public class AddCardActivity extends AppCompatActivity {
                                     String estado = dataIn.readUTF();
                                     if(estado.equalsIgnoreCase("correcto")){
                                         new AlertDialog.Builder(AddCardActivity.this)
-                                                .setTitle(estado)
+                                                .setTitle(R.string.correct)
                                                 .setMessage("Tarjeta creada correctamente")
                                                 .show();
                                     }else if(estado.equalsIgnoreCase("incorrecto")){
                                         new AlertDialog.Builder(AddCardActivity.this)
-                                                .setTitle(String.valueOf(R.string.incorrect).toUpperCase())
+                                                .setTitle(R.string.incorrect)
                                                 .setMessage("No se pudo crear la tarjeta")
                                                 .show();
                                     }else{
                                         new AlertDialog.Builder(AddCardActivity.this)
-                                                .setTitle(String.valueOf(R.string.invalid).toUpperCase())
+                                                .setTitle(R.string.invalid)
                                                 .setMessage("No se pudo crear la tarjeta")
                                                 .show();
                                     }
@@ -141,12 +144,12 @@ public class AddCardActivity extends AppCompatActivity {
                                     String estado = dataIn.readUTF();
                                     if(estado.equalsIgnoreCase("correcto")){
                                         new AlertDialog.Builder(AddCardActivity.this)
-                                                .setTitle(String.valueOf(R.string.correct).toUpperCase())
+                                                .setTitle(R.string.correct)
                                                 .setMessage("Tarjeta creada correctamente")
                                                 .show();
                                     }else{
                                         new AlertDialog.Builder(AddCardActivity.this)
-                                                .setTitle(String.valueOf(R.string.incorrect).toUpperCase())
+                                                .setTitle(R.string.incorrect)
                                                 .setMessage("No se pudo crear la tarjeta")
                                                 .show();
                                     }

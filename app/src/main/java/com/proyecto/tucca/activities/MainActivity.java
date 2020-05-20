@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity /*implements NavigationView.
         textViewInvitado.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                invitado = true;
+                //invitado = true;
                 Intent intent = new Intent(MainActivity.this, MenuActivity.class);
                 startActivity(intent);
                 finish();

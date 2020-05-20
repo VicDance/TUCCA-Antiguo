@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import static com.proyecto.tucca.activities.MainActivity.dataIn;
 import static com.proyecto.tucca.activities.MainActivity.dataOut;
 
-public class CreditCardActivity extends AppCompatActivity {
+public class CreditCardActivity extends AppCompatActivity implements CreditCardsAdapter.OnItemClickListener {
     private RecyclerView recyclerView;
     private CreditCardsAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -83,12 +83,14 @@ public class CreditCardActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new CreditCardsAdapter(creditCardItems);
+        adapter = new CreditCardsAdapter(creditCardItems, this);
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new CreditCardsAdapter.OnItemClickListener() {
+        /*adapter.setOnItemClickListener(new CreditCardsAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 //String newString;
+                textView = findViewById(R.id.text_view_number_credit_card);
+                System.out.println(textView.getText().toString());
                 Bundle extras = getIntent().getExtras();
                 if(extras == null) {
                     newString= null;
@@ -98,12 +100,17 @@ public class CreditCardActivity extends AppCompatActivity {
                     showDialog();
                 }
             }
-        });
+        });*/
     }
 
     private void showDialog() {
         ReloadDialog rd = new ReloadDialog();
         rd.setMessage(newString);
         rd.show(getSupportFragmentManager(), "Card Dialog");
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        //System.out.println(creditCardItems.get(position).getTextNumber());
     }
 }

@@ -36,6 +36,7 @@ public class CardDialog extends DialogFragment {
     private TextView textView;
     private int saldo;
     private String numtarjeta;
+    private String message;
 
     @Nullable
     @Override
@@ -91,6 +92,10 @@ public class CardDialog extends DialogFragment {
         });
         builder.setView(view);
         return builder.create();
+    }
+
+    public void setMessage(String message){
+        this.message = message;
     }
 
     private void compruebaPosicion() {

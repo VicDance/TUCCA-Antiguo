@@ -27,12 +27,12 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardsViewHol
 
     public static class CardsViewHolder extends RecyclerView.ViewHolder{
         public TextView textNumber;
-        public TextView textTipe;
+        public TextView textType;
 
         public CardsViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             textNumber = itemView.findViewById(R.id.text_view_number_card);
-            textTipe = itemView.findViewById(R.id.text_view_tipe_card);
+            textType = itemView.findViewById(R.id.text_view_tipe_card);
             itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -64,7 +64,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardsViewHol
     public void onBindViewHolder(@NonNull CardsViewHolder holder, int position) {
         CardItem currentItem = itemList.get(position);
         holder.textNumber.setText(currentItem.getTextNumber());
-        holder.textTipe.setText(currentItem.getTipe());
+        holder.textType.setText(currentItem.getTipe());
     }
 
     @Override
