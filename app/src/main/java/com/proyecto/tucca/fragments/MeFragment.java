@@ -37,7 +37,9 @@ public class MeFragment extends Fragment {
     private TextView textViewEmail;
     private TextView textViewPhone;
     private Button btnExit;
+    private Button btnChangePassword;
     private TextView textViewName;
+    private TextView textViewNoUser;
     public static User user;
     private View view;
     private String nombre;
@@ -53,30 +55,20 @@ public class MeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_me, container, false);
         btnExit = view.findViewById(R.id.btn_exit);
+        btnChangePassword = view.findViewById(R.id.btn_change_password);
         textViewUser = view.findViewById(R.id.text_view_user);
         textViewBorn= view.findViewById(R.id.text_view_born_date);
         textViewEmail = view.findViewById(R.id.text_view_email);
         textViewPhone = view.findViewById(R.id.text_view_phone);
-        textViewName = view.findViewById(R.id.text_view_name);
-        String datos = null;
-        try {
-            if(login) {
-                dataOut.writeUTF("cliente");
-                dataOut.flush();
-                dataOut.writeUTF(getDatos(getContext()));
-                dataOut.flush();
-                datos = dataIn.readUTF();
-                newDatos = datos.split("/");
-                nombre = newDatos[0];
-                contraseña = newDatos[1];
-                correo = newDatos[2];
-                fecha_nac = newDatos[3];
-                tfno = newDatos[4];
+        //textViewName = view.findViewById(R.id.text_view_name);
 
-                textViewUser.setText(nombre);
-                textViewBorn.setText(fecha_nac);
-                textViewEmail.setText(correo);
-                textViewPhone.setText(tfno);
+        //try {
+            if(login) {
+                setUser();
+            }else{
+                textViewNoUser = view.findViewById(R.id.text_view_no_user);
+                textViewNoUser.setText(R.string.no_user);
+                disableUser();
             }
 
             btnExit.setOnClickListener(new View.OnClickListener() {
@@ -88,10 +80,49 @@ public class MeFragment extends Fragment {
                     //getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LoginFragment()).commit();
                 }
             });
-        } catch (IOException e) {
+        //}
+        return view;
+    }
+
+    private void disableUser(){
+        //try {
+            btnExit.setEnabled(false);
+            btnChangePassword.setVisibility(View.INVISIBLE);
+            textViewUser = view.findViewById(R.id.text_view_user_user);
+            textViewUser.setVisibility(View.INVISIBLE);
+            textViewBorn = view.findViewById(R.id.text_view_date_date);
+            textViewBorn.setVisibility(View.INVISIBLE);
+            textViewEmail = view.findViewById(R.id.text_view_email_email);
+            textViewEmail.setVisibility(View.INVISIBLE);
+            textViewPhone = view.findViewById(R.id.text_view_phone_phone);
+            textViewPhone.setVisibility(View.INVISIBLE);
+        /*}catch (IOException e) {
+            e.printStackTrace();
+        }*/
+    }
+
+    private void setUser(){
+        String datos = null;
+        try {
+            dataOut.writeUTF("cliente");
+            dataOut.flush();
+            dataOut.writeUTF(getDatos(getContext()));
+            dataOut.flush();
+            datos = dataIn.readUTF();
+            newDatos = datos.split("/");
+            nombre = newDatos[0];
+            contraseña = newDatos[1];
+            correo = newDatos[2];
+            fecha_nac = newDatos[3];
+            tfno = newDatos[4];
+
+            textViewUser.setText(nombre);
+            textViewBorn.setText(fecha_nac);
+            textViewEmail.setText(correo);
+            textViewPhone.setText(tfno);
+        }catch (IOException e) {
             e.printStackTrace();
         }
-        return view;
     }
 
     @Override

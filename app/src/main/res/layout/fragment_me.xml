@@ -5,73 +5,81 @@
     android:paddingLeft="30dp"
     android:paddingTop="30dp"
     android:paddingRight="30dp">
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/user"
-            android:textSize="30sp" />
-
-        <TextView
-            android:id="@+id/text_view_user"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:text=""
-            android:textSize="20sp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/email"
-            android:textSize="30sp" />
+            <TextView
+                android:id="@+id/text_view_user_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/user"
+                android:textSize="30sp" />
 
-        <TextView
-            android:id="@+id/text_view_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:text=""
-            android:textSize="20sp" />
+            <TextView
+                android:id="@+id/text_view_user"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:text=""
+                android:textSize="20sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/born_date"
-            android:textSize="30sp" />
+            <TextView
+                android:id="@+id/text_view_email_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/email"
+                android:textSize="30sp" />
 
-        <TextView
-            android:id="@+id/text_view_born_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:text=""
-            android:textSize="20sp" />
+            <TextView
+                android:id="@+id/text_view_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:text=""
+                android:textSize="20sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/phone"
-            android:textSize="30sp" />
+            <TextView
+                android:id="@+id/text_view_date_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/born_date"
+                android:textSize="30sp" />
 
-        <TextView
-            android:id="@+id/text_view_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:text=""
-            android:textSize="20sp" />
+            <TextView
+                android:id="@+id/text_view_born_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:text=""
+                android:textSize="20sp" />
 
-        <!--<RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">-->
+            <TextView
+                android:id="@+id/text_view_phone_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/phone"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/text_view_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:text=""
+                android:textSize="20sp" />
+
+            <!--<RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">-->
 
             <Button
+                android:id="@+id/btn_change_password"
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_button"
@@ -89,6 +97,15 @@
                 android:textColor="@android:color/holo_blue_light"
                 android:layout_marginBottom="30dp"
                 android:layout_marginTop="30dp"/>
-        <!--</RelativeLayout>-->
-    </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_view_no_user"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="200dp"
+            android:textAlignment="center"
+            android:textSize="30sp"/>
+    </RelativeLayout>
 </androidx.core.widget.NestedScrollView>

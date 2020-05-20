@@ -58,4 +58,5 @@
     <string name="payment_instruction">Ponga el dispositivo hacia abajo para realizar el pago</string>
     <string name="no_money">Para utilizar la tarjeta, debe tener saldo</string>
     <string name="insert_quantity">Introduzca cantidad para la recarga</string>
+    <string name="no_user">Debe iniciar sesión para ver sus datos</string>
 </resources>
