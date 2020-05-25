@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
@@ -10,7 +10,7 @@
         android:id="@+id/linear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingBottom="60dp">
+        android:paddingBottom="30dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -36,8 +36,8 @@
         android:text="@string/pay"
         android:textColor="@android:color/white"
         android:textSize="20sp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="70dp"/>-->
+        android:textAlignment="center"
+        android:layout_marginLeft="20dp"/>-->
 
     <Button
         android:id="@+id/btn_reload"
@@ -45,9 +45,9 @@
         android:layout_height="50dp"
         android:background="@drawable/rounded_border"
         android:text="@string/reload"
-        android:textColor="@color/wallet_holo_blue_light"
+        android:textColor="@android:color/holo_blue_light"
         android:textSize="20sp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignBottom="@id/linear"
-        android:layout_marginBottom="20dp"/>
-</RelativeLayout>
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:textAlignment="center"/>
+</LinearLayout>

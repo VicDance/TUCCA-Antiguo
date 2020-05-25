@@ -112,5 +112,6 @@ public class CreditCardActivity extends AppCompatActivity implements CreditCards
     @Override
     public void onItemClick(int position) {
         //System.out.println(creditCardItems.get(position).getTextNumber());
+        showDialog();
     }
 }

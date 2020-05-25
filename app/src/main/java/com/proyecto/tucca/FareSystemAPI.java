@@ -1,15 +1,17 @@
 package com.proyecto.tucca;
 
-import com.proyecto.tucca.model.CityList;
-import com.proyecto.tucca.model.FareSystemList;
-import com.proyecto.tucca.model.LineList;
+import com.proyecto.tucca.model.Horario;
+import com.proyecto.tucca.model.HorarioList;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface FareSystemAPI {
-    @GET("zonas")
+    /*@GET("zonas")
     Call<FareSystemList> getFareSystemList();
 
     @GET("municipios")
@@ -18,9 +20,12 @@ public interface FareSystemAPI {
     @GET("municipios/{id}/nucleos")
     Call<CityList> getCentreList(@Path("id") long idNucleo);
 
-    /*@GET("nucleos/{id}/lineas")
-    Call<LineList> getLineList(@Path("id") long idLinea);*/
-
-    @GET("horarios_lineas?dia=&frecuencia=&lang=ES&linea={id}&mes=")
+    @GET("nucleos/{id}/lineas")
     Call<LineList> getLineList(@Path("id") long idLinea);
+
+    /*@GET("horarios_origen_destino?destino={idDestino}&lang=ES&origen={idOrigen}")
+    Call<Horario> getHorarios(@Query("destino") int destino, @Query("origen") int origen);*/
+
+    @GET("horarios_origen_destino")
+    Call<HorarioList> getHorarios(@Query("destino") int destino, @Query("origen") int origen);
 }

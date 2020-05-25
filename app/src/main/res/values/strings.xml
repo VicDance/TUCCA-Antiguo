@@ -24,7 +24,7 @@
     <string name="destiny_city">Municipio destino</string>
     <string name="origin_centre">Núcleo origen</string>
     <string name="destiny_centre">Núcleo destino</string>
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCG8b65kHX5KO5JlD_KK2wdwiPPYcmzTaQ</string>
+    <!--<string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCG8b65kHX5KO5JlD_KK2wdwiPPYcmzTaQ</string>-->
     <string name="user">Usuario</string>
     <string name="password">Contraseña</string>
     <string name="password_again">Repita contraseña</string>
@@ -59,4 +59,7 @@
     <string name="no_money">Para utilizar la tarjeta, debe tener saldo</string>
     <string name="insert_quantity">Introduzca cantidad para la recarga</string>
     <string name="no_user">Debe iniciar sesión para ver sus datos</string>
+    <string name="centre">Núcleo</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps2">Map</string>
 </resources>

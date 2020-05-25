@@ -91,9 +91,9 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     System.out.println(newString);
                 }*/
                 break;
-            case R.id.nav_settings:
+            /*case R.id.nav_settings:
                 new TaskCambiarFragment().execute(new SettingsFragment());
-                break;
+                break;*/
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

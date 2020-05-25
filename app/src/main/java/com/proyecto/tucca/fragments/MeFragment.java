@@ -135,7 +135,9 @@ public class MeFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         //menu.clear();
         //super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.add_menu, menu);
+        if(login) {
+            inflater.inflate(R.menu.add_menu, menu);
+        }
     }
 
     @Override

@@ -18,6 +18,11 @@ public class Centre {
         this.nombreNucleo = nombreNucleo;
     }
 
+    public Centre(int idNucleo, String nombreNucleo){
+        this.idNucleo = idNucleo;
+        this.nombreNucleo = nombreNucleo;
+    }
+
     public Centre(int idNucleo, int idMunicipio, char idZona, String nombreNucleo){
         this.idNucleo = idNucleo;
         this.idMunicipio = idMunicipio;

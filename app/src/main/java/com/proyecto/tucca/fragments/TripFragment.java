@@ -2,6 +2,7 @@ package com.proyecto.tucca.fragments;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,17 +30,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.proyecto.tucca.activities.StopsActivity;
 import com.proyecto.tucca.model.Centre;
 import com.proyecto.tucca.model.City;
 import com.proyecto.tucca.FareSystemAPI;
-import com.proyecto.tucca.model.LineList;
 import com.proyecto.tucca.R;
+import com.proyecto.tucca.model.Horario;
 import com.proyecto.tucca.viewmodel.LiveDataCentre;
 import com.proyecto.tucca.viewmodel.LiveDataCity;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,7 +58,6 @@ public class TripFragment extends Fragment {
     private SearchView.OnQueryTextListener queryTextListener;
     private RecyclerView.LayoutManager layoutManager;
     private View view;
-    private Retrofit retrofit;
     private Spinner spinnerOriginCity;
     private Spinner spinnerDestinyCity;
     private Spinner spinnerOriginCentre;
@@ -67,7 +66,7 @@ public class TripFragment extends Fragment {
     private String[] listaNombreMunicipios;
     private Centre[] listaNucleos;
     private String[] listaNombreNucleos;
-    private String[] listaLineas;
+    private String[] listaHorarios;
     private ArrayAdapter<String> adapterOriginCities;
     private ArrayAdapter<String> adapterOriginCentre;
     private ArrayAdapter<String> adapterDestinyCities;
@@ -79,6 +78,12 @@ public class TripFragment extends Fragment {
     private String[] newDatos;
     private LiveDataCity liveDataCity;
     private LiveDataCentre liveDataCentre;
+    int idCiudadOrigen;
+    int idCiudadDestino;
+    int idNucleoOrigen;
+    int idNucleoDestino;
+    String nucleoOrigen;
+    String nucleoDestino;
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Nullable
@@ -90,7 +95,13 @@ public class TripFragment extends Fragment {
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(getContext(), StopsActivity.class)
+                        .putExtra("ciudadOrigen", idCiudadOrigen)
+                        .putExtra("ciudadDestino", idCiudadDestino)
+                        .putExtra("nucleoOrigen", idNucleoOrigen)
+                        .putExtra("nucleoDestino", idNucleoDestino)
+                        .putExtra("nombreNucleoOrigen", nucleoOrigen)
+                        .putExtra("nombreNucleoDestino", nucleoDestino));
             }
         });
         //btnPay = view.findViewById(R.id.btn_pay_trip);
@@ -140,11 +151,11 @@ public class TripFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 liveDataCity = new ViewModelProvider((ViewModelStoreOwner) getContext()).get(LiveDataCity.class);
                 //liveDataCity.getCityList();
-                int idMunicipio = 0;
+                //int idMunicipio = 0;
                 String ciudad = (String) parent.getSelectedItem();
                 for (int i = 0; i < listaMunicipios.length; i++) {
                     if (ciudad.equalsIgnoreCase(listaMunicipios[i].getNombreMunicipio())) {
-                        idMunicipio = listaMunicipios[i].getIdMunicipio();
+                        idCiudadOrigen = listaMunicipios[i].getIdMunicipio();
                         //liveDataCity.addCity(new City(idMunicipio, ciudad));
                         //city.setIdMunicipio(idMunicipio);
                         break;
@@ -160,7 +171,7 @@ public class TripFragment extends Fragment {
                     }
                 });
 
-                listarNucleos(idMunicipio);
+                listarNucleos(idCiudadOrigen);
                 setSpinnerOriginCentre();
             }
 
@@ -181,11 +192,11 @@ public class TripFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 liveDataCity = new ViewModelProvider((ViewModelStoreOwner) getContext()).get(LiveDataCity.class);
-                int idMunicipio = 0;
+                //int idMunicipio = 0;
                 String ciudad = (String) parent.getSelectedItem();
                 for (int i = 0; i < listaMunicipios.length; i++) {
                     if (ciudad.equalsIgnoreCase(listaMunicipios[i].getNombreMunicipio())) {
-                        idMunicipio = listaMunicipios[i].getIdMunicipio();
+                        idCiudadDestino = listaMunicipios[i].getIdMunicipio();
                         //liveDataCity.addCity(new City(idMunicipio, ciudad));
                         break;
                     }
@@ -200,7 +211,7 @@ public class TripFragment extends Fragment {
                         adapterOriginCentre.notifyDataSetChanged();
                     }
                 });
-                listarNucleos(idMunicipio);
+                listarNucleos(idCiudadDestino);
                 setSpinnerDestinyCentre();
             }
 
@@ -264,11 +275,11 @@ public class TripFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 liveDataCentre = new ViewModelProvider((ViewModelStoreOwner) getContext()).get(LiveDataCentre.class);
-                int idNucleo = 0;
-                String nucleo = (String) parent.getSelectedItem();
+                //int idNucleo = 0;
+                nucleoOrigen = (String) parent.getSelectedItem();
                 for (int i = 0; i < listaNucleos.length; i++) {
-                    if (nucleo.equalsIgnoreCase(listaNucleos[i].getNombreNucleo())) {
-                        idNucleo = listaNucleos[i].getIdNucleo();
+                    if (nucleoOrigen.equalsIgnoreCase(listaNucleos[i].getNombreNucleo())) {
+                        idNucleoOrigen = listaNucleos[i].getIdNucleo();
                         break;
                     }
                 }
@@ -351,6 +362,13 @@ public class TripFragment extends Fragment {
         spinnerDestinyCentre.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                nucleoDestino = (String) parent.getSelectedItem();
+                for (int i = 0; i < listaNucleos.length; i++) {
+                    if (nucleoDestino.equalsIgnoreCase(listaNucleos[i].getNombreNucleo())) {
+                        idNucleoDestino = listaNucleos[i].getIdNucleo();
+                        break;
+                    }
+                }
                 liveDataCentre = new ViewModelProvider((ViewModelStoreOwner) getContext()).get(LiveDataCentre.class);
                 liveDataCentre.getCentreList().observe((LifecycleOwner) getContext(), new Observer<List<Centre>>() {
                     @Override
@@ -362,45 +380,12 @@ public class TripFragment extends Fragment {
                         adapterOriginCentre.notifyDataSetChanged();
                     }
                 });
+                //listarPlanificador(idNucleoDestino, idNucleoOrigen);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
-    }
-
-    public void listarPlanificador(long idLinea) {
-        retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.ctan.es/v1/Consorcios/2/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        FareSystemAPI fareSystemAPI = retrofit.create(FareSystemAPI.class);
-        Call<LineList> lineListCall = fareSystemAPI.getLineList(idLinea);
-        lineListCall.enqueue(new Callback<LineList>() {
-            @Override
-            public void onResponse(Call<LineList> call, Response<LineList> response) {
-                if (!response.isSuccessful()) {
-                    System.out.println("Code: " + response.code());
-                    return;
-                }
-                LineList lineList = response.body();
-                listaLineas = new String[lineList.getLines().size()];
-                String cadena = "";
-                for (int i = 0; i < lineList.getLines().size(); i++) {
-                    listaLineas[i] = lineList.getLines().get(i).getNombre();
-                }
-                /*for(int i = 0; i < listaLineas.length; i++){
-                    cadena += listaLineas[i] + "\n";
-                    //System.out.println(listaLineas[i]);
-                }
-                textViewLines.append(cadena);*/
-            }
-
-            @Override
-            public void onFailure(Call<LineList> call, Throwable t) {
-                System.out.println("Error: " + t.getMessage());
             }
         });
     }
