@@ -8,6 +8,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -20,6 +21,8 @@ import com.proyecto.tucca.fragments.MainFragment;
 import com.proyecto.tucca.fragments.MeFragment;
 import com.proyecto.tucca.fragments.SalePointFragment;
 import com.proyecto.tucca.fragments.TripFragment;
+
+import static com.proyecto.tucca.activities.MainActivity.login;
 
 public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     public static final String STRING_PREFERENCES = "fragments";
@@ -59,6 +62,12 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         }/*else {
             newString= (String) savedInstanceState.getSerializable("nombre");
         }*/
+        if(!login) {
+            navigationView.getMenu().removeItem(R.id.nav_cards);
+            navigationView.getMenu().removeItem(R.id.nav_log);
+        }else{
+            navigationView.getMenu().removeItem(R.id.nav_sign_up);
+        }
     }
 
     @Override
@@ -93,9 +102,10 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_gap_fare:
                 new TaskCambiarFragment().execute(new GapAndFareFragment());
                 break;
-            /*case R.id.nav_settings:
-                new TaskCambiarFragment().execute(new SettingsFragment());
-                break;*/
+            case R.id.nav_sign_up:
+                startActivity(new Intent(MenuActivity.this, MainActivity.class));
+                finish();
+                break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
