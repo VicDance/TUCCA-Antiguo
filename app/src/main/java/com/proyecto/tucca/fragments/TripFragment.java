@@ -241,7 +241,7 @@ public class TripFragment extends Fragment {
                 try {
                     String datos = dataIn.readUTF();
                     newDatos = datos.split("/");
-                    Centre centre = new Centre(Integer.parseInt(newDatos[0]), Integer.parseInt(newDatos[1]), newDatos[2].charAt(0), newDatos[3]);
+                    Centre centre = new Centre(Integer.parseInt(newDatos[0]), Integer.parseInt(newDatos[1]), newDatos[2], newDatos[3]);
                     listaNucleos[i] = centre;
                 } catch (IOException ex) {
                     Logger.getLogger(TripFragment.class.getName()).log(Level.SEVERE, null, ex);

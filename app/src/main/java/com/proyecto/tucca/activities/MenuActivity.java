@@ -11,15 +11,14 @@ import androidx.fragment.app.Fragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 import com.proyecto.tucca.R;
 import com.proyecto.tucca.fragments.CardsFragment;
+import com.proyecto.tucca.fragments.GapAndFareFragment;
 import com.proyecto.tucca.fragments.MainFragment;
 import com.proyecto.tucca.fragments.MeFragment;
 import com.proyecto.tucca.fragments.SalePointFragment;
-import com.proyecto.tucca.fragments.SettingsFragment;
 import com.proyecto.tucca.fragments.TripFragment;
 
 public class MenuActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -90,6 +89,9 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
                     newString = extras.getString("nombre");
                     System.out.println(newString);
                 }*/
+                break;
+            case R.id.nav_gap_fare:
+                new TaskCambiarFragment().execute(new GapAndFareFragment());
                 break;
             /*case R.id.nav_settings:
                 new TaskCambiarFragment().execute(new SettingsFragment());

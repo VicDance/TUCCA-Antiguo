@@ -5,6 +5,7 @@
     <string name="lines">Mapa de líneas</string>
     <string name="cards">Mis tarjetas</string>
     <string name="sales">Puntos de venta</string>
+    <string name="gap_fare">Saltos y tarifas</string>
     <string name="gap">Saltos</string>
     <string name="fare">Tarifas</string>
     <string name="interest">Zonas de interés</string>
@@ -60,6 +61,7 @@
     <string name="insert_quantity">Introduzca cantidad para la recarga</string>
     <string name="no_user">Debe iniciar sesión para ver sus datos</string>
     <string name="centre">Núcleo</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="title_activity_maps2">Map</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

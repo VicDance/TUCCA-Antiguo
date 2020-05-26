@@ -16,12 +16,9 @@
         <item android:id="@+id/nav_sales"
             android:title="@string/sales"
             android:icon="@drawable/ic_sales_point"/>
-        <item android:id="@+id/nav_gap"
-            android:title="@string/gap"
+        <item android:id="@+id/nav_gap_fare"
+            android:title="@string/gap_fare"
             android:icon="@drawable/ic_gap"/>
-        <item android:id="@+id/nav_fare"
-            android:title="@string/fare"
-            android:icon="@drawable/ic_fare"/>
         <item android:id="@+id/nav_places"
             android:title="@string/interest"
             android:icon="@drawable/ic_interesting_places"/>

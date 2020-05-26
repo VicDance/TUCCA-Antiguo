@@ -1,5 +1,7 @@
 package com.proyecto.tucca;
 
+import com.proyecto.tucca.model.FareList;
+import com.proyecto.tucca.model.GapList;
 import com.proyecto.tucca.model.Horario;
 import com.proyecto.tucca.model.HorarioList;
 
@@ -28,4 +30,10 @@ public interface FareSystemAPI {
 
     @GET("horarios_origen_destino")
     Call<HorarioList> getHorarios(@Query("destino") int destino, @Query("origen") int origen);
+
+    @GET("tarifas_interurbanas")
+    Call<FareList> getFareList();
+
+    @GET("saltos")
+    Call<GapList> getGapList();
 }
