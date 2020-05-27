@@ -4,12 +4,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.proyecto.tucca.R;
@@ -21,7 +19,7 @@ import io.card.payment.CreditCard;
 
 import static com.proyecto.tucca.activities.MainActivity.dataIn;
 import static com.proyecto.tucca.activities.MainActivity.dataOut;
-import static com.proyecto.tucca.fragments.MeFragment.user;
+import static com.proyecto.tucca.activities.RegisterActivity.usuario;
 
 public class NewCreditCardActivity extends AppCompatActivity {
     public static final int SCAN_RESULT = 100;
@@ -72,7 +70,7 @@ public class NewCreditCardActivity extends AppCompatActivity {
                 try {
                     dataOut.writeUTF("ntarjeta");
                     dataOut.flush();
-                    dataOut.writeUTF(scanResult.getRedactedCardNumber() + "-" + user.getId() + "-" + editTextCaducidad.getText() + "-"
+                    dataOut.writeUTF(scanResult.getRedactedCardNumber() + "-" + usuario.getId() + "-" + editTextCaducidad.getText() + "-"
                     + editTextTitular.getText());
                     dataOut.flush();
                     String estado = dataIn.readUTF();

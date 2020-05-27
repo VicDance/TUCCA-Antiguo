@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity /*implements NavigationView.
             login = true;
             //guardado = true;
             Intent intent = new Intent(MainActivity.this, MenuActivity.class);
-            //intent.putExtra("nombre", nombreCliente);
+            intent.putExtra("nombre", nombreCliente);
             startActivity(intent);
         }
         textViewInvitado = findViewById(R.id.text_view_invitado);
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity /*implements NavigationView.
                             guardaEstado();
                             guardarDatos();
                             Intent intent = new Intent(MainActivity.this, MenuActivity.class);
-                            //intent.putExtra("nombre", editTextUser.getText().toString().trim());
+                            intent.putExtra("nombre", editTextUser.getText().toString().trim());
                             startActivity(intent);
                             finish();
                         } else {
@@ -156,7 +156,10 @@ public class MainActivity extends AppCompatActivity /*implements NavigationView.
 
     private void conectar() {
         final int PUERTO = 6000;
+        //mi casa
         final String HOST = "192.168.1.13";
+        //casa angel
+        //final String HOST = "192.168.137.1";
         //"localhost";
         int SDK_INT = android.os.Build.VERSION.SDK_INT;
         if (SDK_INT > 8) {

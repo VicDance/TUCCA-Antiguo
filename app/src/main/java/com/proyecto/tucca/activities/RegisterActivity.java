@@ -15,13 +15,11 @@ import androidx.fragment.app.DialogFragment;
 
 import com.proyecto.tucca.R;
 import com.proyecto.tucca.fragments.DatePickerFragment;
+import com.proyecto.tucca.model.Usuario;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,6 +36,8 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
     private ImageButton datePicker;
     private TextView textView;
     private Long date;
+
+    public static Usuario usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,16 +65,19 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                         dataOut.flush();
                         String estado = dataIn.readUTF();
                         if(estado.equalsIgnoreCase("correcto")){
+                            usuario = new Usuario(editTextUser.getText().toString(), editTextEmail.getText().toString(), Integer.parseInt(editTextPhone.getText().toString()), textView.getText().toString(), "");
+                            System.out.println(usuario);
                             new AlertDialog.Builder(RegisterActivity.this)
-                                    .setTitle("Correcto")
+                                    .setTitle(getString(R.string.correct))
                                     .setMessage("Se ha registrado satisfactoriamente")
                                     .show();
                         }else{
                             new AlertDialog.Builder(RegisterActivity.this)
-                                    .setTitle("Incorrecto")
+                                    .setTitle(getString(R.string.incorrect))
                                     .setMessage("No se ha podido registrar")
                                     .show();
                         }
+                        //finish();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

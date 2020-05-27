@@ -1,23 +1,44 @@
 package com.proyecto.tucca.model;
 
 
-public class User {
+import java.io.FileInputStream;
+import java.io.Serializable;
+
+public class Usuario {
     private int id;
     private String nombre;
     private String correo;
     private int tfno;
     private String fecha_nac;
+    private String imagen;
 
-    public User(){
+    public Usuario(){
 
     }
 
-    public User(int id, String nombre, String correo, int tfno, String fecha_nac){
+    public Usuario(int id, String nombre, String correo, int tfno, String fecha_nac){
         this.id = id;
         this.nombre = nombre;
         this.correo = correo;
         this.tfno = tfno;
         this.fecha_nac = fecha_nac;
+    }
+
+    public Usuario(int id, String nombre, String correo, int tfno, String fecha_nac, String imagen){
+        this.id = id;
+        this.nombre = nombre;
+        this.correo = correo;
+        this.tfno = tfno;
+        this.fecha_nac = fecha_nac;
+        this.imagen = imagen;
+    }
+
+    public Usuario(String nombre, String correo, int tfno, String fecha_nac, String imagen){
+        this.nombre = nombre;
+        this.correo = correo;
+        this.tfno = tfno;
+        this.fecha_nac = fecha_nac;
+        this.imagen = imagen;
     }
 
     public int getId() {
@@ -60,6 +81,14 @@ public class User {
         this.fecha_nac = fecha_nac;
     }
 
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -68,6 +97,7 @@ public class User {
                 ", correo='" + correo + '\'' +
                 ", tfno=" + tfno +
                 ", fecha_nac='" + fecha_nac + '\'' +
+                ", imagen=" + imagen +
                 '}';
     }
 }

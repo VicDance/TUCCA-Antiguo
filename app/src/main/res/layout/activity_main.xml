@@ -23,7 +23,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="35sp"
-                android:text="@string/user"
+                android:text="@string/usuario"
                 android:textSize="30sp"
                 android:textAlignment="center"
                 android:textIsSelectable="false"/>
